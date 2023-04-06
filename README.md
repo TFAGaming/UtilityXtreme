@@ -13,10 +13,12 @@
 - Feature-rich.
 - **100%** built with TypeScript.
 
-## Update v1.0.1
+## Update v1.1.0
 ```diff
-+ Add GitHub repository link in package.json.
-+ Fixed .npmignore to ingore the dir "test".
+- The old versions has been deprecated.
+
++ Add typedoc to generate documentation website.
++ Fixed .npmignore to ingore the dir "test" and others.
 ```
 
 ## Requirements
@@ -74,7 +76,6 @@ client.on('interactionCreate', async (interaction) => {
     };
 });
 
-// Login & start to the client.
 client.login(TOKEN);
 ```
 
@@ -110,4 +111,4 @@ isWebURL('welp nobody asked') // => false
 - [**T.F.A#7524**](https://www.github.com/TFAGaming): Package creator ツ
 
 ### Note:
-This package is not associated with the discord.js team.
+This package is not associated with the discord.js development team.
