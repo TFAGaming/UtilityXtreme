@@ -42,9 +42,9 @@ export class ApplicationCommandsLoader extends EventEmitter {
     public async start() {
         return new Promise(async (resolved, rejected) => {
             try {
-                const rest = new REST().setToken(this.clientToken);
-
                 this.emit('loaderStarted', this);
+
+                const rest = new REST().setToken(this.clientToken);
 
                 if (this.testGuildId && this.testGuildId?.length > 1) {
                     await rest.put(Routes.applicationGuildCommands(this.clientId, this.testGuildId), { body: this.commands });

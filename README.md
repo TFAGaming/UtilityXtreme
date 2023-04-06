@@ -1,4 +1,9 @@
-# UtilityXtreme
+<h1 align="center">
+    UtilityXtreme
+</h1>
+<p align="center">
+    <img src="https://nodei.co/npm/utilityxtreme.png?downloadRank=true&downloads=true&downloadRank=true&stars=true">
+</p>
 
 **UtilityXtreme** is a library that simplifies of creating your own Discord bot application.
 
@@ -27,8 +32,8 @@ yarn add utilityxtreme
 
 ## Examples
 ### 1. Discord bot
-Here is a Discord bot client example, you can try this one!
 
+TypeScript example:
 ```js
 import {
     Client,
@@ -38,30 +43,27 @@ import {
     ApplicationCommandsLoader
 } from 'utilityxtreme';
 
-// Define your bot token & your bot id.
 const TOKEN = 'Your application bot token';
 const ID = 'Your application ID';
 
-// Create a new client using the class Client.
 const client = new Client({
     intents: ['Guilds']
 });
 
-// Define an array of slash commands, the outpout must be in JSON format.
-const commands: SlashCommandBuilder[] = [
+const commands = [
     new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with pong!')
         .toJSON()
 ];
 
-// Create a new application commands loader.
-const loader = new ApplicationCommandsLoader(TOKEN, ID, commands).start();
+const loader = new ApplicationCommandsLoader(TOKEN, ID, commands);
 
 loader.on('loaderStarted', () => { console.log('[!] Started loading application commands...') });
 loader.on('loaderFinished', () => { console.log('[!] Finished loading application commands.') });
 
-// Event from the client whenever an application command is used.
+loader.start();
+
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
@@ -74,6 +76,18 @@ client.on('interactionCreate', async (interaction) => {
 
 // Login & start to the client.
 client.login(TOKEN);
+```
+
+If you want to use this example with JavaScript language, change the modules importing system by using the `require()` method.
+
+```js
+const {
+    Client,
+    SlashCommandBuilder
+} = require('discord.js');
+const {
+    ApplicationCommandsLoader
+} = require('utilityxtreme')
 ```
 
 ### 2. Discord simplified methods
