@@ -17,5 +17,12 @@
     "lib",
     "types",
     "src/index.test.ts"
-  ]
+  ],
+  "typedocOptions": {
+    "entryPoints": [
+      "src/"
+    ],
+    "out": "docs",
+    "readme": "README.md"
+  }
 }

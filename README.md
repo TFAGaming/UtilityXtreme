@@ -13,13 +13,8 @@
 - Feature-rich.
 - **100%** built with TypeScript.
 
-## Update v1.1.0
-```diff
-- The old versions has been deprecated.
-
-+ Add typedoc to generate documentation website.
-+ Fixed .npmignore to ingore the dir "test" and others.
-```
+## Update v1.1.1
+- Add homepage link in the package.json file.
 
 ## Requirements
 - [**Node.js**]() v16.9.0 or above.
@@ -32,10 +27,12 @@ npm install utilityxtreme
 yarn add utilityxtreme
 ```
 
+## Documentation
+[Click here](https://tfagaming.github.io/utilityxtreme/) to visit the documentation website.
+
 ## Examples
 ### 1. Discord bot
 
-TypeScript example:
 ```js
 import {
     Client,
@@ -79,7 +76,7 @@ client.on('interactionCreate', async (interaction) => {
 client.login(TOKEN);
 ```
 
-If you want to use this example with JavaScript language, change the modules importing system by using the `require()` method.
+The example above is written for TypeScript. If you want to use this example with JavaScript, change the modules importing system by using the `require()` method.
 
 ```js
 const {
@@ -88,7 +85,7 @@ const {
 } = require('discord.js');
 const {
     ApplicationCommandsLoader
-} = require('utilityxtreme')
+} = require('utilityxtreme');
 ```
 
 ### 2. Discord simplified methods
@@ -109,6 +106,9 @@ isWebURL('welp nobody asked') // => false
 
 ## Developers
 - [**T.F.A#7524**](https://www.github.com/TFAGaming): Package creator ツ
+
+## Support
+<img src="https://invidget.switchblade.xyz/bGNRZcnwWy">
 
 ### Note:
 This package is not associated with the discord.js development team.
