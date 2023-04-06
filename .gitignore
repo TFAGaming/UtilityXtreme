@@ -1,0 +1,7 @@
+# Dirs
+node_modules/
+lib/
+test/
+
+# Files
+package-lock.json
