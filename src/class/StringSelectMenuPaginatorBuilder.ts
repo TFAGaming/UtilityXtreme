@@ -57,6 +57,12 @@ export class StringSelectMenuPaginatorBuilder {
      */
 
     constructor(interaction: CommandInteraction, collectorFilter: CollectorFilter<[StringSelectMenuInteraction]>, customizeSelectMenu?: CustomizeSelectMenuData) {
+        if (!interaction) throw new DJSError(errorkeys.MissingParam);
+
+        if (!collectorFilter) throw new DJSError(errorkeys.MissingParam);
+
+        if (typeof collectorFilter !== 'function') throw new DJSError(errorkeys.TypeError, 'function');
+
         this.interaction = interaction;
 
         this.collector = this.interaction.channel?.createMessageComponentCollector({

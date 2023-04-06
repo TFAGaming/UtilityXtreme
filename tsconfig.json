@@ -23,6 +23,7 @@
       "src/"
     ],
     "out": "docs",
-    "readme": "README.md"
+    "readme": "CHANGELOG.md",
+    "name": "UtilityXtreme [Beta]"
   }
 }
