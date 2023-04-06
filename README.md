@@ -8,9 +8,10 @@
 - Feature-rich.
 - **100%** built with TypeScript.
 
-## Update v1.0.0
+## Update v1.0.1
 ```diff
-+ Official release of the package on the npm registry.
++ Add GitHub repository link in package.json.
++ Fixed .npmignore to ingore the dir "test".
 ```
 
 ## Requirements
@@ -35,7 +36,7 @@ import {
 } from 'discord.js';
 import {
     ApplicationCommandsLoader
-} from 'new-folder';
+} from 'utilityxtreme';
 
 // Define your bot token & your bot id.
 const TOKEN = 'Your application bot token';

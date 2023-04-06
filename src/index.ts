@@ -9,7 +9,7 @@ export * from './global/enums';
 /**
  * UtilityXtreme, © 2023
  * 
- * This project is under license GPU, any copies of this project will be taken down by the developers.
+ * This project is under license GPL-3.0, any copies of this project will be taken down by the developers.
  * 
  * Built with TypeScript, by T.F.A#7524.
  */

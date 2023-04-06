@@ -1,15 +1,21 @@
 {
   "name": "utilityxtreme",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The friendly package to start with your Discord bot application.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "node test/index.js",
-    "build": "tsc"
+    "build": "tsc",
+    "autoc": "npm publish && git add . && git commit -m \"Auto commit and publish\"",
+    "prerel": "npm publish --tag prerelease"
   },
   "author": "TFAGaming",
-  "license": "GNU",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TFAGaming/UtilityXtreme.git"
+  },
   "dependencies": {
     "discord.js": "^14.9.0"
   }
