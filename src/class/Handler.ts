@@ -91,7 +91,7 @@ export class Handler extends EventEmitter {
                     for (const directory of readdirSync(this.fs_path)) {
                         for (const file of readdirSync(this.fs_path + directory + '/').filter((f) => f.endsWith('.js'))) {
                             // This package has it's own handler, and the exportation of the modules must include the 'default' keyword.
-                            const module: CommandOptions = require(this.md_path)['default'];
+                            const module: CommandOptions = require(this.md_path + directory + '/' + file)['default'];
 
                             if (!module.data || typeof module.data !== 'object') {
                                 this.emit('fileUnloaded', file, directory);
@@ -109,7 +109,7 @@ export class Handler extends EventEmitter {
                 } else {
                     for (const file of readdirSync(this.fs_path + '/').filter((f) => f.endsWith('.js'))) {
                         // This package has it's own handler, and the exportation of the modules must include the 'default' keyword.
-                        const module: CommandOptions = require(this.md_path)['default'];
+                        const module: CommandOptions = require(this.md_path + file)['default'];
 
                         if (!module.data || typeof module.data !== 'object') {
                             this.emit('fileUnloaded', file, null);
