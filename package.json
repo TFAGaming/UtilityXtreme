@@ -23,7 +23,6 @@
     "discord.js": "^14.9.0"
   },
   "devDependencies": {
-    "typedoc": "^0.23.28",
-    "utilityxtreme": "^1.2.0-prerelease-3"
+    "typedoc": "^0.23.28"
   }
 }
