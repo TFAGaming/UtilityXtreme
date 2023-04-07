@@ -1,6 +1,6 @@
 {
   "name": "utilityxtreme",
-  "version": "1.2.0-prerelease-3",
+  "version": "1.2.0",
   "description": "The friendly package to start with your Discord bot application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -24,6 +24,6 @@
   },
   "devDependencies": {
     "typedoc": "^0.23.28",
-    "utilityxtreme": "^1.2.0-prerelease-2"
+    "utilityxtreme": "^1.2.0-prerelease-3"
   }
 }

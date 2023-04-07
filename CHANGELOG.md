@@ -1,7 +1,11 @@
-## v1.2.0 [PREREALEASE]
+## v1.2.0
+- Removed `Handler` class.
+- Removed `Command` class.
+
+## v1.2.0-prerelease-x [DEPRECATED]
 - Testing `Handler` class.
 
-## v1.1.2
+## v1.1.2 [DEPRECATED]
 - Docs website domain fixed.
 - Add `CHANGELOG.md` to the docs.
 

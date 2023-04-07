@@ -27,20 +27,22 @@ yarn add utilityxtreme
 ## Documentation
 [Click here](https://tfagaming.github.io/utilityxtreme/) to visit the documentation website.
 
-## Examples
-### 1. Discord bot (TypeScript)
+## Preview
+### 1. Discord bot
+This example below is written in TypeScript.
 
 ```js
 import {
     Client,
-    SlashCommandBuilder
+    SlashCommandBuilder,
+    CommandInteraction
 } from 'discord.js';
 import {
     ApplicationCommandsLoader
 } from 'utilityxtreme';
 
-const TOKEN = 'Your application bot token';
-const ID = 'Your application ID';
+const TOKEN: string = 'Your application bot token';
+const ID: string = 'Your application ID';
 
 const client = new Client({
     intents: ['Guilds']
@@ -63,7 +65,7 @@ loader.start();
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
-    if (interaction.commandName === 'ping') {
+    if ((interaction as CommandInteraction).commandName === 'ping') {
         await interaction.reply({ content: 'Pong!' });
 
         return;
@@ -73,80 +75,12 @@ client.on('interactionCreate', async (interaction) => {
 client.login(TOKEN);
 ```
 
-### 2. Commands handler [BETA]
-You can add your own custom options for the `Command` class (ex: Owner only, Cooldown... etc.).
-
-```txt
-Bot
- ├─── commands
- │       └─── Information
- │                  └─── ping.ts
- ├─── index.ts
- ├─── package.json
- └─── node_modules
-```
-
-`index.ts` file:
-```ts
-import {
-    Client,
-    SlashCommandBuilder
-} from 'discord.js';
-import {
-    ApplicationCommandsLoader
-} from 'utilityxtreme';
-
-const TOKEN = 'Your application bot token';
-const ID = 'Your application ID';
-
-const client = new Client({
-    intents: ['Guilds']
-});
-
-const handler = new Handler(client, './commands/', './commands/', { includesDir: true });
-
-handler.on('fileLoaded', (f) => '[!] New command loaded: ' + f);
-handler.on('fileUnloaded', (f) => '[!] Failed to load the command: ' + f);
-
-handler.on('chatInputCreate', async (interaction, commandsMap) => {
-    if (!commandsMap.get(interaction.commandName)) return;
-
-    commandsMap.run(client, interaction, interaction.options);
-});
-
-const data = handler.loadFiles();
-
-const loader = new ApplicationCommandsLoader(TOKEN, ID, handler.getCommands());
-
-loader.on('loaderStarted', () => { console.log('[!] Started loading application commands...') });
-loader.on('loaderFinished', () => { console.log('[!] Finished loading application commands.') });
-
-loader.start();
-
-client.login(TOKEN);
-```
-
-`ping.ts` file:
-```ts
-export default new Command({
-    data: new SlashCommandBuilder()
-        .setName('ping')
-        .setDescription('Pong')
-        .toJSON(),
-    run: async (client, interaction, args) => {
-        await interaction.reply({ content: 'Pong!' });
-
-        return;
-    };
-});
-```
-
-### 3. Discord simplified methods
+### 2. Discord simplified methods
 ```ts
 createDiscordTimestamp(Date.now() + 5000, 'R'); // => "in 5 seconds"
 ```
 
-### 4. String methods
+### 3. Other cool methods
 ```ts
 reverseString('Hello your computer has virus'); // => 'suriv sah retupmoc ruoy olleH'
 
