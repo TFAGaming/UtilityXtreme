@@ -13,9 +13,6 @@
 - Feature-rich.
 - **100%** built with TypeScript.
 
-## Update v1.1.1
-- Add homepage link in the package.json file.
-
 ## Requirements
 - [**Node.js**]() v16.9.0 or above.
 - [**discord.js**](https://www.npmjs.com/package/discord.js) v14.7.0 or above.
@@ -31,7 +28,7 @@ yarn add utilityxtreme
 [Click here](https://tfagaming.github.io/utilityxtreme/) to visit the documentation website.
 
 ## Examples
-### 1. Discord bot
+### 1. Discord bot (TypeScript)
 
 ```js
 import {
@@ -49,7 +46,7 @@ const client = new Client({
     intents: ['Guilds']
 });
 
-const commands = [
+const commands: SlashCommandBuilder[] = [
     new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with pong!')
@@ -76,24 +73,80 @@ client.on('interactionCreate', async (interaction) => {
 client.login(TOKEN);
 ```
 
-The example above is written for TypeScript. If you want to use this example with JavaScript, change the modules importing system by using the `require()` method.
+### 2. Commands handler [BETA]
+You can add your own custom options for the `Command` class (ex: Owner only, Cooldown... etc.).
 
-```js
-const {
-    Client,
-    SlashCommandBuilder
-} = require('discord.js');
-const {
-    ApplicationCommandsLoader
-} = require('utilityxtreme');
+```txt
+Bot
+ ├─── commands
+ │       └─── Information
+ │                  └─── ping.ts
+ ├─── index.ts
+ ├─── package.json
+ └─── node_modules
 ```
 
-### 2. Discord simplified methods
+`index.ts` file:
+```ts
+import {
+    Client,
+    SlashCommandBuilder
+} from 'discord.js';
+import {
+    ApplicationCommandsLoader
+} from 'utilityxtreme';
+
+const TOKEN = 'Your application bot token';
+const ID = 'Your application ID';
+
+const client = new Client({
+    intents: ['Guilds']
+});
+
+const handler = new Handler(client, './commands/', './commands/', { includesDir: true });
+
+handler.on('fileLoaded', (f) => '[!] New command loaded: ' + f);
+handler.on('fileUnloaded', (f) => '[!] Failed to load the command: ' + f);
+
+handler.on('chatInputCreate', async (interaction, commandsMap) => {
+    if (!commandsMap.get(interaction.commandName)) return;
+
+    commandsMap.run(client, interaction, interaction.options);
+});
+
+const data = handler.loadFiles();
+
+const loader = new ApplicationCommandsLoader(TOKEN, ID, handler.getCommands());
+
+loader.on('loaderStarted', () => { console.log('[!] Started loading application commands...') });
+loader.on('loaderFinished', () => { console.log('[!] Finished loading application commands.') });
+
+loader.start();
+
+client.login(TOKEN);
+```
+
+`ping.ts` file:
+```ts
+export default new Command({
+    data: new SlashCommandBuilder()
+        .setName('ping')
+        .setDescription('Pong')
+        .toJSON(),
+    run: async (client, interaction, args) => {
+        await interaction.reply({ content: 'Pong!' });
+
+        return;
+    };
+});
+```
+
+### 3. Discord simplified methods
 ```ts
 createDiscordTimestamp(Date.now() + 5000, 'R'); // => "in 5 seconds"
 ```
 
-### 3. String methods
+### 4. String methods
 ```ts
 reverseString('Hello your computer has virus'); // => 'suriv sah retupmoc ruoy olleH'
 
@@ -108,7 +161,9 @@ isWebURL('welp nobody asked') // => false
 - [**T.F.A#7524**](https://www.github.com/TFAGaming): Package creator ツ
 
 ## Support
-<img src="https://invidget.switchblade.xyz/bGNRZcnwWy">
+<a href="https://discord.gg/bGNRZcnwWy">
+    <img src="https://invidget.switchblade.xyz/bGNRZcnwWy">
+</a>
 
 ### Note:
 This package is not associated with the discord.js development team.

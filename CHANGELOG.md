@@ -1,4 +1,5 @@
-# Changelogs
+## v1.2.0 [PREREALEASE]
+- Testing `Handler` class.
 
 ## v1.1.2
 - Docs website domain fixed.

@@ -39,6 +39,7 @@ export class Handler extends EventEmitter {
     md_path: string = '';
     options: HandlerOptions = {};
     commands: Map<string, CommandOptions> = new Map<string, CommandOptions>();
+    data_commands: object[] = [];
 
     /**
      * A simple handler to load modules such as commands and events.
@@ -100,6 +101,8 @@ export class Handler extends EventEmitter {
 
                             this.commands.set(module.data?.name, module);
 
+                            this.data_commands.push(module.data);
+
                             this.emit('fileLoaded', file, directory);
                         };
                     };
@@ -116,6 +119,8 @@ export class Handler extends EventEmitter {
 
                         this.commands.set(module.data?.name, module);
 
+                        this.data_commands.push(module.data);
+
                         this.emit('fileLoaded', file, null);
                     };
                 };
@@ -125,5 +130,9 @@ export class Handler extends EventEmitter {
                 rejected(err);
             };
         });
+    };
+
+    public getCommands() {
+        return this.commands.keys();
     };
 };

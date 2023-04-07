@@ -9,7 +9,7 @@ export class JSONDatabase {
 
     /**
      * Creates a simple JSON database.
-     * @param path The FileSystem path of the JSON file.
+     * @param path The FileSystem path of the JSON file, starts from the main folder.
      * @param init Initialize the file, rewrites the file when the program starts with `{}`. Default: `false`
      */
 
@@ -109,9 +109,13 @@ export class JSONDatabase {
         return this;
     };
 
-    public vars() {
+    public keys() {
         let data = this.read();
 
         return Object.keys(data);
+    };
+
+    public length() {
+        return this.keys().length;
     };
 };
