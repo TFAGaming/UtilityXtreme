@@ -52,7 +52,7 @@ export class JSONDatabase {
 
         return this;
     };
-
+    
     public get(variable: string) {
         let data = this.read();
 

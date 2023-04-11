@@ -85,7 +85,7 @@ export class StringSelectMenuPaginatorBuilder {
         return new Promise(async (resolved, rejected) => {
             try {
                 const menu = new StringSelectMenuBuilder()
-                    .setCustomId('tfagamingutils-menu')
+                    .setCustomId('utilityxtreme-menu')
                     .setPlaceholder(this.selectcustom.placeHolder)
                     .addOptions(
                         this.options_data.map((item, index) => {
@@ -117,8 +117,6 @@ export class StringSelectMenuPaginatorBuilder {
                 this.interaction.replied ? await this.interaction.editReply(messageToSendData) : await this.interaction.reply(messageToSendData);
 
                 this.collector?.on('collect', async (i) => {
-                    if (i.customId !== 'tfagamingutils-menu') return;
-
                     if (options?.replyWithEphemeralMessageOnCollect && options.updateMessageOnCollect) throw new DJSError(errorkeys.TwoParamsChosen);
 
                     const value = parseInt(i.values[0]);

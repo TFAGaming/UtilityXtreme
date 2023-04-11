@@ -32,3 +32,37 @@ export enum TimestampStyles {
      */
     RelativeTime = "R"  
 }
+
+/**
+ * The possible events to use with the class `BoostDetector`.
+ */
+
+export enum BoostDetectorEvents {
+    /**
+     * Whenever a guild member has boosted a server.
+     */
+    BoostCreate = 'boostCreate',
+    /**
+     * Whenever a guild member has removed a boost from a server.
+     */
+    BoostRemove = 'boostRemove',
+};
+
+/**
+ * The possible events to use with the class `ApplicationCommandsLoader`
+ */
+
+export enum ApplicationCommandsLoaderEvents {
+    /**
+     * Whenever the loader starts.
+     */
+    LoaderStarted = 'loaderStarted',
+    /**
+     * Whenever the application commands has been loaded through Discord.
+     */
+    LoaderFinished = 'loaderFinished',
+    /**
+     * Whenever the loader has found a problem.
+     */
+    LoaderRejected = 'loaderRejected'
+};

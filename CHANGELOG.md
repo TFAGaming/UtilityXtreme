@@ -1,3 +1,7 @@
+## v1.3.0-prerelease-x
+- New functions: `sleep` and `randomizedString`.
+- New class: `BoostDetector`.
+
 ## v1.2.0
 - Removed `Handler` class.
 - Removed `Command` class.
