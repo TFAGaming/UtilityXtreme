@@ -117,8 +117,6 @@ export class StringSelectMenuPaginatorBuilder {
                 this.interaction.replied ? await this.interaction.editReply(messageToSendData) : await this.interaction.reply(messageToSendData);
 
                 this.collector?.on('collect', async (i) => {
-                    if (options?.replyWithEphemeralMessageOnCollect && options.updateMessageOnCollect) throw new DJSError(errorkeys.TwoParamsChosen);
-
                     const value = parseInt(i.values[0]);
 
                     if (options?.replyWithEphemeralMessageOnCollect) {
