@@ -180,7 +180,7 @@ export class ButtonsPaginatorBuilder {
         return new Promise(async (resolved, rejected) => {
             try {
                 let components = this.buttons_data.map((item) => {
-                    if (item.id === 'previous') {
+                    if (options?.disableButtonsOnLastAndFirstPage && item.id === 'previous') {
                         return new ButtonBuilder()
                             .setLabel(item.label)
                             .setDisabled(true)
