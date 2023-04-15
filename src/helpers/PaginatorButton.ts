@@ -1,5 +1,5 @@
 import {
-    ButtonStyle
+    ButtonStyle, ComponentEmojiResolvable
 } from "discord.js";
 import { ButtonsBuilderData } from "../class/ButtonsPaginatorBuilder";
 import { DJSError, errorkeys } from "../error";
@@ -7,7 +7,7 @@ import { DJSError, errorkeys } from "../error";
 export class PaginatorButton implements ButtonsBuilderData {
     label!: string;
     id!: string;
-    emoji?: string | undefined;
+    emoji?: ComponentEmojiResolvable | { name: undefined };
     type!: ButtonStyle;
 
     /**
@@ -30,8 +30,8 @@ export class PaginatorButton implements ButtonsBuilderData {
         return this;
     };
 
-    public setEmoji(emoji: string) {
-        this.emoji = emoji;
+    public setEmoji(emoji: ComponentEmojiResolvable) {
+        this.emoji = emoji || { name: undefined };
 
         return this;
     };

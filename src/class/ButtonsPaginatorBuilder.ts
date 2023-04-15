@@ -181,20 +181,12 @@ export class ButtonsPaginatorBuilder {
         return new Promise(async (resolved, rejected) => {
             try {
                 let components = this.buttons_data.map((item) => {
-                    if (item.emoji) {
-                        return new ButtonBuilder()
+                    return new ButtonBuilder()
                         .setLabel(item.label)
                         .setDisabled(false)
                         .setCustomId(item.id)
                         .setStyle(item.type)
-                        .setEmoji(item.emoji || { name: undefined })
-                    } else {
-                        return new ButtonBuilder()
-                        .setLabel(item.label)
-                        .setDisabled(false)
-                        .setCustomId(item.id)
-                        .setStyle(item.type)
-                    };
+                        .setEmoji(item.emoji || { name: undefined });
                 });
 
                 const index = this.buttons_data.findIndex((btn) => btn.id === 'previous');
