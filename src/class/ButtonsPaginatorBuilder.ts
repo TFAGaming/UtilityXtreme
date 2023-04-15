@@ -60,7 +60,6 @@ export class ButtonsPaginatorBuilder {
     /**
      * Creates a Buttons paginator using `CommandInteraction#channel#createMessageComponentCollector()` from **discord.js**.
      * 
-     * **THIS IS A PRE-RELEASE FEATURE**
      * @param interaction The interaction, extends from the class `CommandInteraction` from **discord.js**.
      * @param options Custom options. Default: `{ time: 60000 }`
      */
@@ -243,7 +242,7 @@ export class ButtonsPaginatorBuilder {
                         } else {
                             current++;
 
-                            if (current === this.pages_data.length - 1) {
+                            if (current === this.pages_data.length - 1 && options?.disableButtonsOnLastAndFirstPage) {
                                 nextButton(true);
                                 previousButton(false);
                             };
