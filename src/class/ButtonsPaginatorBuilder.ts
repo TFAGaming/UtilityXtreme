@@ -9,7 +9,8 @@ import {
     ButtonBuilder,
     InteractionReplyOptions,
     ActionRowBuilder,
-    ButtonStyle
+    ButtonStyle,
+    ComponentEmojiResolvable
 } from 'discord.js';
 import { DJSError, errorkeys } from '../error/index';
 
@@ -39,7 +40,7 @@ interface PagesData {
 export interface ButtonsBuilderData {
     id: string,
     label: string,
-    emoji?: string | undefined,
+    emoji?: ComponentEmojiResolvable,
     type: ButtonStyle
 };
 
@@ -185,7 +186,7 @@ export class ButtonsPaginatorBuilder {
                         .setDisabled(false)
                         .setCustomId(item.id)
                         .setStyle(item.type)
-                        .setEmoji(item.emoji || '')
+                        .setEmoji(item.emoji || { name: undefined })
                 });
 
                 const messageToSendData: InteractionReplyOptions = {
