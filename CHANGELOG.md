@@ -1,6 +1,7 @@
 ## v1.3.0-prerelease-x
-- New functions: `sleep` and `randomizedString`.
-- New class: `BoostDetector`.
+- New functions: `sleep`, `randomizedString`, and `idGen`.
+- New classes: `BoostDetector` and `ButtonsPaginatorBuilder` (**PRE-RELEASE FEATURE**).
+- Fixing the class `StringSelectMenuPaginatorBuilder`.
 
 ## v1.2.0
 - Removed `Handler` class.

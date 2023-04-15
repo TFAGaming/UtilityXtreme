@@ -7,15 +7,18 @@
 
 **UtilityXtreme** is a library that simplifies of creating your own Discord bot application.
 
-- Easy to use.
+- Easy to use & Beginner friendly.
 - **99.9%** Promise based.
 - Supportable with latest **discord.js** version (v14).
+- Open-source project.
 - Feature-rich.
 - **100%** built with TypeScript.
 
 ## Requirements
-- [**Node.js**]() v16.9.0 or above.
-- [**discord.js**](https://www.npmjs.com/package/discord.js) v14.7.0 or above.
+- [**Node.js**](https://nodejs.org/en/download/) v16.9.0 or above.
+- [**discord.js**](https://www.npmjs.com/package/discord.js) v14.9.0 or above.
+
+> **Optional:** Use TypeScript instead of JavaScript.
 
 ## Installation
 
@@ -78,6 +81,14 @@ client.login(TOKEN);
 ### 2. Discord simplified methods
 ```ts
 createDiscordTimestamp(Date.now() + 5000, 'R'); // => "in 5 seconds"
+
+new ButtonsPaginatorBuilder(); // Creates a paginator with buttons.
+
+new StringSelectMenuPaginatorBuilder(); // Creates a paginator with dropdown menu.
+
+new FileBuilder(); // Creates a text file for Discord using Buffer.
+
+new BoostDetector(); // Creates a boost detector for any guild.
 ```
 
 ### 3. Other cool methods
@@ -89,15 +100,60 @@ censorString('aw hell nah', ['hell']); // => 'aw **** nah'
 isDiscordInviteURL('Join my server! https://discord.gg/djs') // => true
 
 isWebURL('welp nobody asked') // => false
+
+await sleep(5000); // Sleeps for 5 seconds (in async function)
+
+randomizedString(10, { includesInteger: false }); // => 'AgdvFokcLE'
+
+idGen(); // => 94151456100486147
+```
+
+### 4. Simple JSON database
+```ts
+import {
+    JSONDatabase
+} from 'utilityxtreme';
+
+const db = new JSONDatabase('./src/database.json'); // (Creates the database and load the methods)
+
+db.set('name', 'T.F.A'); // => "name": "T.F.A",
+
+db.set('age', 16); // => "age": 16,
+
+db.keys(); // => ['name', 'age']
+
+db.get('name'); // => 'T.F.A'
+
+db.del('name'); // (Deletes the key)
+
+db.get('name'); // => undefined
+
+db.set('langs', ['JS', 'TS', 'Rust']);
+
+db.push('langs', 'PY'); // => "langs": ["JS", "TS", "Rust", "PY"],
+
+db.pull('langs', (item) => item !== 'Rust'); // => "langs": ["JS", "TS", "PY"],
 ```
 
 ## Developers
-- [**T.F.A#7524**](https://www.github.com/TFAGaming): Package creator ツ
+- [**T.F.A#7524**](https://www.github.com/TFAGaming) ツ: Head Developer
 
 ## Support
 <a href="https://discord.gg/bGNRZcnwWy">
     <img src="https://invidget.switchblade.xyz/bGNRZcnwWy">
 </a>
 
-### Note:
-This package is not associated with the discord.js development team.
+## Other information
+
+### Contributing:
+
+If you have found an issue or a bug, please double-check the documentation and make sure that it hasn't been already reported/suggested.
+
+- Create a new [Issue](https://github.com/TFAGaming/UtilityXtreme/issues) or [Pull Request](https://github.com/TFAGaming/UtilityXtreme/pulls).
+- Help other members that are in-need in the [Discord server](https://discord.gg/bGNRZcnwWy).
+
+### License:
+This project is under the license **GPL-3.0**.
+
+### Development:
+This package is not associated with the [**discord.js**](https://www.npmjs.com/package/discord.js) development team.

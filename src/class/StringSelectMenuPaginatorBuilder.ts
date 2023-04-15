@@ -18,11 +18,15 @@ interface SendOptionsData {
         embeds?: EmbedBuilder[],
         files?: AttachmentBuilder[]
     },
+    onEnd?: {
+        content?: string,
+        embeds?: EmbedBuilder[],
+        files?: AttachmentBuilder[]
+    },
     ephemeral?: boolean,
     mentionRepliedUser?: boolean,
-    deleteAfterTimeout?: boolean,
-    replyWithEphemeralMessageOnCollect?: boolean,
-    updateMessageOnCollect?: boolean,
+    deleteMessageAfterTimeout?: boolean,
+    replyWithEphemeralMessageOnCollect?: boolean
 };
 
 interface OptionsData {
@@ -38,55 +42,110 @@ interface OptionsData {
     }
 };
 
-interface CustomizeSelectMenuData {
-    placeHolder: string
+interface CustomOptions {
+    placeHolder?: string,
+    filter?: CollectorFilter<[StringSelectMenuInteraction]>,
+    time?: number,
+    customId?: string
 };
 
 export class StringSelectMenuPaginatorBuilder {
-    data: this = this;
-    collector: InteractionCollector<StringSelectMenuInteraction> | undefined;
+    readonly data: this = this;
+    readonly collector: InteractionCollector<StringSelectMenuInteraction> | undefined;
     options_data: OptionsData[] = [];
-    selectcustom: CustomizeSelectMenuData;
-    interaction: CommandInteraction;
+    readonly custom_options: CustomOptions;
+    readonly interaction: CommandInteraction;
 
     /**
      * Creates a Select menu/Dropdown menu paginator using `CommandInteraction#channel#createMessageComponentCollector()` from **discord.js**.
      * @param interaction The interaction, extends from the class `CommandInteraction` from **discord.js**.
-     * @param collectorFilter The collector filter. If you want to set it to nothing, use an empty function: `() => { }`.
-     * @param customizeSelectMenu Customize the select menu. Default: `{ placeHolder: 'Select something' }`
+     * @param options Custom options. Default: `{ time: 60000, placeHolder: 'Select here', customId: 'utilityxtreme-menu' }`
      */
 
-    constructor(interaction: CommandInteraction, collectorFilter: CollectorFilter<[StringSelectMenuInteraction]>, customizeSelectMenu?: CustomizeSelectMenuData) {
+    constructor(interaction: CommandInteraction, options?: CustomOptions) {
         if (!interaction) throw new DJSError(errorkeys.MissingParam);
-
-        if (!collectorFilter) throw new DJSError(errorkeys.MissingParam);
-
-        if (typeof collectorFilter !== 'function') throw new DJSError(errorkeys.TypeError, 'function');
 
         this.interaction = interaction;
 
         this.collector = this.interaction.channel?.createMessageComponentCollector({
             componentType: ComponentType.StringSelect,
-            filter: collectorFilter
+            filter: options?.filter || undefined,
+            time: options?.time || 60000
         });
 
-        this.selectcustom = customizeSelectMenu || { placeHolder: 'Select something' };
+        this.custom_options = options || {};
     };
 
+    /**
+     * Adds options to the Dropdown menu options array.
+     * 
+     * **Note:** The difference between `addOptions` and `setOptions` that the first method (`addOptions`) adds multiple options at same time to the options array, while the other (`setOptions`) overwrites the array to an empty array and sets new options.
+     * @param data The data.
+     * @returns {this}
+     */
+
     public addOptions(...data: OptionsData[]) {
-        data.forEach((æ) => { // I dont know what to name this param, so I named it "æ"
+        data.forEach((æ) => {
             this.options_data.push(æ);
         });
 
         return this;
     };
 
+    /**
+     * Set options to the Dropdown menu options array.
+     * 
+     * **Note:** The difference between `addOptions` and `setOptions` that the first method (`addOptions`) adds multiple options at same time to the options array, while the other (`setOptions`) overwrites the array to an empty array and sets new options.
+     * @param data The data.
+     * @returns {this}
+     */
+
+    public setOptions(...data: OptionsData[]) {
+        this.options_data = [];
+
+        data.forEach((æ) => {
+            this.options_data.push(æ);
+        });
+
+        return this;
+    };
+
+    /**
+     * Push an option to the Dropdown menu options array.
+     * @param data The data.
+     * @returns {this}
+     */
+
+    public pushOption(data: OptionsData) {
+        this.options_data.push(data);
+
+        return this;
+    };
+
+    /**
+     * Pull an option from the Dropdown menu options array by it's index.
+     * @param index The index of the option.
+     * @returns {this}
+     */
+
+    public pullOption(index: number) {
+        this.options_data.splice(index, 1);
+
+        return this;
+    };
+
+    /**
+     * Sends the message with the dropdown menu.
+     * @param options Custom options of sending the message.
+     * @returns {Promise<unknown>}
+     */
+
     public async send(options?: SendOptionsData) {
         return new Promise(async (resolved, rejected) => {
             try {
                 const menu = new StringSelectMenuBuilder()
-                    .setCustomId('utilityxtreme-menu')
-                    .setPlaceholder(this.selectcustom.placeHolder)
+                    .setCustomId('utilityxtreme-menu' ?? this.custom_options.customId)
+                    .setPlaceholder(this.custom_options.placeHolder ?? 'Select here')
                     .addOptions(
                         this.options_data.map((item, index) => {
                             return {
@@ -114,20 +173,20 @@ export class StringSelectMenuPaginatorBuilder {
                     ephemeral: options?.ephemeral || false
                 };
 
-                this.interaction.replied ? await this.interaction.editReply(messageToSendData) : await this.interaction.reply(messageToSendData);
+                await this.interaction.reply(messageToSendData);
 
                 this.collector?.on('collect', async (i) => {
                     const value = parseInt(i.values[0]);
 
                     if (options?.replyWithEphemeralMessageOnCollect) {
-                        if (i.replied) return;
-
                         await i.reply({
                             content: this.options_data[value].message.content || '** **',
                             embeds: this.options_data[value].message.embeds?.map((e) => e) || [],
                             files: this.options_data[value].message.files?.map((f) => f) || [],
                             ephemeral: true
                         });
+
+                        return;
                     } else {
                         await i.update({
                             content: this.options_data[value].message.content || '** **',
@@ -140,18 +199,21 @@ export class StringSelectMenuPaginatorBuilder {
                                     )
                             ]
                         });
-                    };
 
-                    return;
+                        return;
+                    };
                 });
 
                 this.collector?.on('end', async () => {
                     if (!this.collector?.ended) return;
 
-                    if (options?.deleteAfterTimeout) {
+                    if (options?.deleteMessageAfterTimeout) {
                         await this.interaction.deleteReply();
                     } else {
                         await this.interaction.editReply({
+                            content: options?.onEnd?.content ? options.onEnd.content : '** **',
+                            embeds: options?.onEnd?.embeds ? options.onEnd.embeds.map((e) => e) : [],
+                            files: options?.onEnd?.files ? options.onEnd.files.map((f) => f) : [],
                             components: [
                                 new ActionRowBuilder<StringSelectMenuBuilder>()
                                     .addComponents(

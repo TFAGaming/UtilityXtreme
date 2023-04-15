@@ -52,7 +52,7 @@ export enum BoostDetectorEvents {
  * The possible events to use with the class `ApplicationCommandsLoader`
  */
 
-export enum ApplicationCommandsLoaderEvents {
+export enum AppCommandsLoaderEvents {
     /**
      * Whenever the loader starts.
      */

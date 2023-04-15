@@ -3,10 +3,10 @@ import { EventEmitter } from 'events';
 import { DJSError, errorkeys } from "../error";
 
 export class ApplicationCommandsLoader extends EventEmitter {
-    clientToken: string = '';
-    clientId: string = '';
-    commands: object[] = [];
-    testGuildId: string | null = '';
+    readonly clientToken: string = '';
+    readonly clientId: string = '';
+    readonly commands: object[] = [];
+    readonly testGuildId: string | null = '';
 
     /**
      * Load application commands to Discord using `REST` and `Routes` from **discord.js**.
@@ -14,6 +14,7 @@ export class ApplicationCommandsLoader extends EventEmitter {
      * @param clientId The application id.
      * @param commands The application commands.
      * @param testGuildId The guild ID to load the commands. Default: Global
+     * @extends {EventEmitter}
      */
 
     constructor(clientToken: string, clientId: string, commands: object[], testGuildId?: string) {
@@ -38,6 +39,11 @@ export class ApplicationCommandsLoader extends EventEmitter {
         this.commands = commands;
         this.testGuildId = testGuildId || null;
     };
+
+    /**
+     * Starts loading the application commands to the Discord app.
+     * @returns {Promise<unknown>}
+     */
 
     public async start() {
         return new Promise(async (resolved, rejected) => {

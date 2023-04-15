@@ -8,6 +8,12 @@ interface BoostDetectorEvents {
 };
 
 export class BoostDetector extends EventEmitter {
+    /**
+     * Detects whenever a guild member has boosted a server.
+     * @param client The client.
+     * @extends {EventEmitter}
+     */
+
     constructor(client: Client) {
         if (!client) throw new DJSError(errorkeys.MissingParam);
 

@@ -9,13 +9,11 @@
     "skipLibCheck": true
   },
   "include": [
-    "src",
-    "types"
+    "src"
   ],
   "exclude": [
     "node_modules",
     "lib",
-    "types",
     "src/index.test.ts"
   ],
   "typedocOptions": {

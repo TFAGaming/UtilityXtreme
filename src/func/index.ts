@@ -5,3 +5,4 @@ export * from './isWebURL';
 export * from './reverseString';
 export * from './sleep';
 export * from './randomizedString';
+export * from './idGen';
