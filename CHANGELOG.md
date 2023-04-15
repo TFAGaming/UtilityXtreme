@@ -1,9 +1,16 @@
-## v1.3.0-prerelease-x
+## v1.3.3
+- The class `ButtonsPaginatorBuilder` now supports the reply types: Whenever the interaction is replied, it will edit it. Else, it will just reply.
+
+## v1.3.0 => 1.3.2 [DEPRECATED]
+- Fixing the class `ButtonsPaginatorBuilder`.
+
+## v1.3.0-prerelease-x [DEPRECATED]
 - New functions: `sleep`, `randomizedString`, and `idGen`.
-- New classes: `BoostDetector` and `ButtonsPaginatorBuilder` (**PRE-RELEASE FEATURE**).
+- New classes: `BoostDetector` and `ButtonsPaginatorBuilder`.
+- Fixing the class `ButtonsPaginatorBuilder`.
 - Fixing the class `StringSelectMenuPaginatorBuilder`.
 
-## v1.2.0
+## v1.2.0 [DEPRECATED]
 - Removed `Handler` class.
 - Removed `Command` class.
 
