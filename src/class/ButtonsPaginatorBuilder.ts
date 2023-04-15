@@ -234,21 +234,27 @@ export class ButtonsPaginatorBuilder {
 
                 this.collector?.on('collect', async (i) => {
                     if (i.customId === 'next') {
-                        if (current === this.pages_data.length - 1) {
-                            if (options?.disableButtonsOnLastAndFirstPage) {
+                        if (options?.disableButtonsOnLastAndFirstPage) {
+                            if (current === this.pages_data.length - 1) {
                                 nextButton(true);
                                 previousButton(false);
-                            } else current = 0;
-                        } else {
-                            current++;
+                            } else {
+                                current++;
 
-                            if (current === this.pages_data.length - 1 && options?.disableButtonsOnLastAndFirstPage) {
-                                nextButton(true);
-                                previousButton(false);
+                                if (current === this.pages_data.length - 1) {
+                                    nextButton(true);
+                                    previousButton(false);
+                                };
+                            };
+
+                            if (current !== 0 && current !== this.pages_data.length - 1) bothEnable();
+                        } else {
+                            if (current === this.pages_data.length - 1) {
+                                current = 0;
+                            } else {
+                                current++;
                             };
                         };
-
-                        if (current !== 0 && current !== this.pages_data.length - 1) bothEnable();
 
                         await i.update({
                             content: this.pages_data[current].content ? this.pages_data[current].content : '** **',
@@ -266,23 +272,27 @@ export class ButtonsPaginatorBuilder {
                     };
 
                     if (i.customId === 'previous') {
-                        if (current === 0) {
-                            if (options?.disableButtonsOnLastAndFirstPage) {
+                        if (options?.disableButtonsOnLastAndFirstPage) {
+                            if (current === 0) {
                                 previousButton(true);
                                 nextButton(false);
                             } else {
-                                current = this.pages_data.length - 1;
-                            };
-                        } else {
-                            current--;
+                                current--;
 
-                            if (current === 0 && options?.disableButtonsOnLastAndFirstPage) {
-                                previousButton(true);
-                                nextButton(false);
+                                if (current === 0) {
+                                    previousButton(true);
+                                    nextButton(false);
+                                };
+                            };
+
+                            if (current !== 0 && current !== this.pages_data.length - 1) bothEnable();
+                        } else {
+                            if (current === 0) {
+                                current = this.pages_data.length - 1;
+                            } else {
+                                current--;
                             };
                         };
-
-                        if (current !== 0 && current !== this.pages_data.length - 1) bothEnable();
 
                         await i.update({
                             content: this.pages_data[current].content ? this.pages_data[current].content : '** **',
