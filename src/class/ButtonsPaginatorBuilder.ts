@@ -216,16 +216,6 @@ export class ButtonsPaginatorBuilder {
 
                 let current = 0;
 
-                const bothFalse = () => {
-                    const index1 = this.buttons_data.findIndex((btn) => btn.id === 'next');
-
-                    if (index1 > -1) components[index1].setDisabled(false);
-
-                    const index2 = this.buttons_data.findIndex((btn) => btn.id === 'previous');
-
-                    if (index2 > -1) components[index2].setDisabled(false);
-                };
-
                 const nextButton = (toggle: boolean) => {
                     const index = this.buttons_data.findIndex((btn) => btn.id === 'next');
 
@@ -236,6 +226,11 @@ export class ButtonsPaginatorBuilder {
                     const index = this.buttons_data.findIndex((btn) => btn.id === 'previous');
 
                     if (index > -1) components[index].setDisabled(toggle);
+                };
+
+                const bothEnable = () => {
+                    nextButton(false);
+                    previousButton(false);
                 };
 
                 this.collector?.on('collect', async (i) => {
@@ -253,6 +248,8 @@ export class ButtonsPaginatorBuilder {
                                 previousButton(false);
                             };
                         };
+
+                        if (current !== 0 && current !== this.pages_data.length - 1) bothEnable();
 
                         await i.update({
                             content: this.pages_data[current].content ? this.pages_data[current].content : '** **',
@@ -285,6 +282,8 @@ export class ButtonsPaginatorBuilder {
                                 nextButton(false);
                             };
                         };
+
+                        if (current !== 0 && current !== this.pages_data.length - 1) bothEnable();
 
                         await i.update({
                             content: this.pages_data[current].content ? this.pages_data[current].content : '** **',
@@ -353,7 +352,7 @@ export class ButtonsPaginatorBuilder {
                                         this.buttons_data.map((item) => {
                                             return new ButtonBuilder()
                                                 .setLabel(item.label)
-                                                .setDisabled(false)
+                                                .setDisabled(true)
                                                 .setCustomId(item.id)
                                                 .setStyle(item.type)
                                                 .setEmoji(item.emoji || '')
