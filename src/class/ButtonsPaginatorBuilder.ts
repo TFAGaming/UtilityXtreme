@@ -181,13 +181,25 @@ export class ButtonsPaginatorBuilder {
         return new Promise(async (resolved, rejected) => {
             try {
                 let components = this.buttons_data.map((item) => {
-                    return new ButtonBuilder()
+                    if (item.emoji) {
+                        return new ButtonBuilder()
                         .setLabel(item.label)
                         .setDisabled(false)
                         .setCustomId(item.id)
                         .setStyle(item.type)
                         .setEmoji(item.emoji || { name: undefined })
+                    } else {
+                        return new ButtonBuilder()
+                        .setLabel(item.label)
+                        .setDisabled(false)
+                        .setCustomId(item.id)
+                        .setStyle(item.type)
+                    };
                 });
+
+                const index = this.buttons_data.findIndex((btn) => btn.id === 'previous');
+
+                if (index > -1) components[index].setDisabled(true); // Because always starts with the index 0.
 
                 const messageToSendData: InteractionReplyOptions = {
                     content: options?.home?.content ? options.home.content : this.pages_data[0].content || '** **',
@@ -211,6 +223,10 @@ export class ButtonsPaginatorBuilder {
 
                 this.collector?.on('collect', async (i) => {
                     if (i.customId === 'next') {
+                        const index = this.buttons_data.findIndex((btn) => btn.id === 'previous');
+
+                        if (index > -1) components[index].setDisabled(false);
+
                         if (current === this.pages_data.length - 1) {
                             if (options?.disableButtonsOnLastAndFirstPage) {
                                 const index = this.buttons_data.findIndex((btn) => btn.id === 'next');
@@ -243,6 +259,10 @@ export class ButtonsPaginatorBuilder {
                     };
 
                     if (i.customId === 'previous') {
+                        const index = this.buttons_data.findIndex((btn) => btn.id === 'next');
+
+                        if (index > -1) components[index].setDisabled(false);
+
                         if (current === 0) {
                             if (options?.disableButtonsOnLastAndFirstPage) {
                                 const index = this.buttons_data.findIndex((btn) => btn.id === 'previous');
