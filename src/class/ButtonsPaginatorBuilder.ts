@@ -211,7 +211,7 @@ export class ButtonsPaginatorBuilder {
                     ephemeral: options?.ephemeral || false
                 };
 
-                await this.interaction.reply(messageToSendData);
+                await (this.interaction.replied ? await this.interaction.editReply(messageToSendData) : await this.interaction.reply(messageToSendData));
 
                 let current = 0;
 
