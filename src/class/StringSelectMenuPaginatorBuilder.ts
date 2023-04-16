@@ -7,6 +7,7 @@ import {
     EmbedBuilder,
     InteractionCollector,
     InteractionReplyOptions,
+    MessageCreateOptions,
     StringSelectMenuBuilder,
     StringSelectMenuInteraction
 } from "discord.js";
@@ -23,6 +24,8 @@ interface SendOptionsData {
         embeds?: EmbedBuilder[],
         files?: AttachmentBuilder[]
     },
+    channelSend?: boolean,
+    editReply?: boolean,
     ephemeral?: boolean,
     mentionRepliedUser?: boolean,
     deleteMessageAfterTimeout?: boolean,
@@ -157,7 +160,22 @@ export class StringSelectMenuPaginatorBuilder {
                         })
                     );
 
-                const messageToSendData: InteractionReplyOptions = {
+                const sendData: MessageCreateOptions = {
+                    content: options?.home?.content ? options.home.content : this.options_data[0].message.content,
+                    embeds: options?.home?.embeds ? options.home.embeds.map((e) => e) : this.options_data[0].message.embeds?.map((e) => e),
+                    files: options?.home?.files ? options.home.files.map((f) => f) : this.options_data[0].message.files?.map((f) => f),
+                    components: [
+                        new ActionRowBuilder<StringSelectMenuBuilder>()
+                            .addComponents(
+                                menu
+                            )
+                    ],
+                    allowedMentions: {
+                        repliedUser: options?.mentionRepliedUser || true
+                    }
+                };
+
+                const replyData: InteractionReplyOptions = {
                     content: options?.home?.content ? options.home.content : this.options_data[0].message.content,
                     embeds: options?.home?.embeds ? options.home.embeds.map((e) => e) : this.options_data[0].message.embeds?.map((e) => e),
                     files: options?.home?.files ? options.home.files.map((f) => f) : this.options_data[0].message.files?.map((f) => f),
@@ -173,10 +191,22 @@ export class StringSelectMenuPaginatorBuilder {
                     ephemeral: options?.ephemeral || false
                 };
 
-                await this.interaction.reply(messageToSendData);
+                if (options?.channelSend) {
+                    await this.interaction.channel?.send(sendData);
+                } else if (options?.editReply) {
+                    this.interaction.replied ? await this.interaction.editReply(replyData) : await this.interaction.reply(replyData);
+                } else await this.interaction.reply(replyData);
 
                 this.collector?.on('collect', async (i) => {
                     const value = parseInt(i.values[0]);
+
+                    if (i.user.id !== this.interaction.user.id) {
+                        await i.reply({
+                            content: 'You are not the author of this interaction.'
+                        }).catch(() => { });
+
+                        return;
+                    };
 
                     if (options?.replyWithEphemeralMessageOnCollect) {
                         await i.reply({

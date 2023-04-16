@@ -88,10 +88,12 @@ new StringSelectMenuPaginatorBuilder(); // Creates a paginator with dropdown men
 
 new FileBuilder(); // Creates a text file for Discord using Buffer.
 
-new BoostDetector(); // Creates a boost detector for any guild.
+new BoostDetector(); // Detects whenever a guild member has boost a server.
+
+new Calculator(); // Creates a pre-ready and simple calculator (mathjs not required).
 ```
 
-### 3. Other cool methods
+### 3. Useful and cool functions
 ```ts
 reverseString('Hello your computer has virus'); // => 'suriv sah retupmoc ruoy olleH'
 
@@ -106,6 +108,8 @@ await sleep(5000); // Sleeps for 5 seconds (in async function)
 randomizedString(10, { includesInteger: false }); // => 'AgdvFokcLE'
 
 idGen(); // => 94151456100486147
+
+calculateString('(5*2)-9+2'); // => '3'
 ```
 
 ### 4. Simple JSON database
@@ -136,11 +140,11 @@ db.pull('langs', (item) => item !== 'Rust'); // => "langs": ["JS", "TS", "PY"],
 ```
 
 ## Developers
-- [**T.F.A#7524**](https://www.github.com/TFAGaming) ツ: Head Developer
+- [**T.F.A#7524**](https://www.github.com/TFAGaming): Head Developer (ツ)
 
 ## Support
-<a href="https://discord.gg/bGNRZcnwWy">
-    <img src="https://invidget.switchblade.xyz/bGNRZcnwWy">
+<a href="https://discord.gg/E6VFACWu5V">
+    <img src="https://invidget.switchblade.xyz/E6VFACWu5V">
 </a>
 
 ## Other information
@@ -150,7 +154,7 @@ db.pull('langs', (item) => item !== 'Rust'); // => "langs": ["JS", "TS", "PY"],
 If you have found an issue or a bug, please double-check the documentation and make sure that it hasn't been already reported/suggested.
 
 - Create a new [Issue](https://github.com/TFAGaming/UtilityXtreme/issues) or [Pull Request](https://github.com/TFAGaming/UtilityXtreme/pulls).
-- Help other members that are in-need in the [Discord server](https://discord.gg/bGNRZcnwWy).
+- Help other members that are in-need on the [Discord server](https://discord.gg/E6VFACWu5V).
 
 ### License:
 This project is under the license **GPL-3.0**.

@@ -1,6 +1,6 @@
 {
   "name": "utilityxtreme",
-  "version": "1.3.3",
+  "version": "1.4.0-prerelease-1",
   "description": "The friendly package to start with your Discord bot application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

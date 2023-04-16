@@ -10,21 +10,19 @@ import {
     InteractionReplyOptions,
     ActionRowBuilder,
     ButtonStyle,
-    ComponentEmojiResolvable
+    ComponentEmojiResolvable,
+    MessageCreateOptions
 } from 'discord.js';
 import { DJSError, errorkeys } from '../error/index';
 
 interface SendOptions {
-    home?: {
-        content?: string,
-        embeds?: EmbedBuilder[],
-        files?: AttachmentBuilder[]
-    },
     onEnd?: {
         content?: string,
         embeds?: EmbedBuilder[],
         files?: AttachmentBuilder[]
     },
+    channelSend?: boolean,
+    editReply?: boolean,
     ephemeral?: boolean,
     mentionRepliedUser?: boolean,
     deleteMessageAfterTimeout?: boolean,
@@ -81,11 +79,12 @@ export class ButtonsPaginatorBuilder {
     /**
      * Adds buttons to the components message.
      * 
-     * Use the following IDs to make the buttons working:
-     * ```txt
+     * Use the following button IDs to make them working: (All in lowercase)
+     * ```yaml
      * next: Next page.
-     * previous: Back page.
-     * home: Back to the home page.
+     * previous: Previous page.
+     * firstpage: Go to the first page.
+     * lastpage: Go to the last page.
      * deletereply: Deletes the reply.
      * disableall: Disables the buttons.
      * ```
@@ -110,11 +109,12 @@ export class ButtonsPaginatorBuilder {
     /**
      * Set buttons to the components message.
      * 
-     * Use the following IDs to make the buttons working:
-     * ```txt
+     * Use the following button IDs to make them working: (All in lowercase)
+     * ```yaml
      * next: Next page.
-     * previous: Back page.
-     * home: Back to the home page.
+     * previous: Previous page.
+     * firstpage: Go to the first page.
+     * lastpage: Go to the last page.
      * deletereply: Deletes the reply.
      * disableall: Disables the buttons.
      * ```
@@ -172,6 +172,18 @@ export class ButtonsPaginatorBuilder {
 
     /**
      * Sends the message with the buttons.
+     * 
+     * By default, the interaction will be replied. To modify this, you can edit the reply or send the pagination to the interation channel without replying to the user in the options:
+     * 
+     * ```ts
+     * {
+     *     channelSend: true, // If you want to send it in the interaction channel.
+     *     editReply: true // If you want to edit the interaction reply.
+     * }
+     * ```
+     * 
+     * **Note:** If **editReply** property is `true` and the interaction is not replied yet, it will ignore this option and the interaction will be replied to avoid any kind of errors.
+     * 
      * @param options Custom options of sending the message.
      * @returns {Promise<unknown>}
      */
@@ -195,10 +207,10 @@ export class ButtonsPaginatorBuilder {
                         .setEmoji(item.emoji || { name: undefined });
                 });
 
-                const messageToSendData: InteractionReplyOptions = {
-                    content: options?.home?.content ? options.home.content : this.pages_data[0].content || '** **',
-                    embeds: options?.home?.embeds ? options.home.embeds.map((e) => e) : this.pages_data[0].embeds?.map((e) => e),
-                    files: options?.home?.files ? options.home.files.map((f) => f) : this.pages_data[0].files?.map((f) => f),
+                const replyData: InteractionReplyOptions = {
+                    content: this.pages_data[0].content || '** **',
+                    embeds: this.pages_data[0].embeds?.map((e) => e),
+                    files: this.pages_data[0].files?.map((f) => f),
                     components: [
                         new ActionRowBuilder<ButtonBuilder>()
                             .addComponents(
@@ -211,7 +223,26 @@ export class ButtonsPaginatorBuilder {
                     ephemeral: options?.ephemeral || false
                 };
 
-                await (this.interaction.replied ? await this.interaction.editReply(messageToSendData) : await this.interaction.reply(messageToSendData));
+                const sendData: MessageCreateOptions = {
+                    content: this.pages_data[0].content || '** **',
+                    embeds: this.pages_data[0].embeds?.map((e) => e),
+                    files: this.pages_data[0].files?.map((f) => f),
+                    components: [
+                        new ActionRowBuilder<ButtonBuilder>()
+                            .addComponents(
+                                components
+                            )
+                    ],
+                    allowedMentions: {
+                        repliedUser: options?.mentionRepliedUser || true
+                    }
+                };
+
+                if (options?.channelSend) {
+                    await this.interaction.channel?.send(sendData);
+                } else if (options?.editReply) {
+                    this.interaction.replied ? await this.interaction.editReply(replyData) : await this.interaction.reply(replyData);
+                } else await this.interaction.reply(replyData);
 
                 let current = 0;
 
@@ -233,6 +264,14 @@ export class ButtonsPaginatorBuilder {
                 };
 
                 this.collector?.on('collect', async (i) => {
+                    if (i.user.id !== this.interaction.user.id) {
+                        await i.reply({
+                            content: 'You are not the author of this interaction.'
+                        }).catch(() => { });
+
+                        return;
+                    };
+
                     if (i.customId === 'next') {
                         if (options?.disableButtonsOnLastAndFirstPage) {
                             if (current === this.pages_data.length - 1) {
@@ -309,11 +348,35 @@ export class ButtonsPaginatorBuilder {
                         return;
                     };
 
-                    if (i.customId === 'home') {
+                    if (i.customId === 'firstpage') {
+                        previousButton(true);
+                        nextButton(false);
+
                         await i.update({
-                            content: options?.home?.content ? options.home.content : this.pages_data[0].content || '** **',
-                            embeds: options?.home?.embeds ? options.home.embeds.map((e) => e) : this.pages_data[0].embeds?.map((e) => e),
-                            files: options?.home?.files ? options.home.files.map((f) => f) : this.pages_data[0].files?.map((f) => f),
+                            content: this.pages_data[0].content || '** **',
+                            embeds: this.pages_data[0].embeds?.map((e) => e),
+                            files: this.pages_data[0].files?.map((f) => f),
+                            components: [
+                                new ActionRowBuilder<ButtonBuilder>()
+                                    .addComponents(
+                                        components
+                                    )
+                            ],
+                        });
+
+                        return;
+                    };
+
+                    if (i.customId === 'lastpage') {
+                        previousButton(false);
+                        nextButton(true);
+
+                        const index = this.pages_data.length - 1;
+
+                        await i.update({
+                            content: this.pages_data[index].content || '** **',
+                            embeds: this.pages_data[index].embeds?.map((e) => e),
+                            files: this.pages_data[index].files?.map((f) => f),
                             components: [
                                 new ActionRowBuilder<ButtonBuilder>()
                                     .addComponents(

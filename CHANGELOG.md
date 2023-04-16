@@ -1,3 +1,6 @@
+## v1.4.0-prerelease-x
+- New class: `Calculator`.
+
 ## v1.3.3
 - The class `ButtonsPaginatorBuilder` now supports the reply types: Whenever the interaction is replied, it will edit it. Else, it will just reply.
 

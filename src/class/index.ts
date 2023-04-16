@@ -3,6 +3,5 @@ export * from './FileBuilder';
 export * from './JSONDatabase';
 export * from './StringSelectMenuPaginatorBuilder';
 export * from './BoostDetector';
-export {
-    ButtonsPaginatorBuilder
-} from './ButtonsPaginatorBuilder';
+export * from './ButtonsPaginatorBuilder';
+export * from './Calculator';
