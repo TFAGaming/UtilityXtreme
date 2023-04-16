@@ -204,7 +204,7 @@ export class Calculator {
                             .setCustomId('*')
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
-                            .setLabel(' ')
+                            .setLabel('~')
                             .setCustomId('NO_ID_1')
                             .setDisabled(true)
                             .setStyle(ButtonStyle.Secondary),
@@ -227,7 +227,7 @@ export class Calculator {
                             .setCustomId('=')
                             .setStyle(ButtonStyle.Success),
                         new ButtonBuilder()
-                            .setLabel(' ')
+                            .setLabel('~')
                             .setCustomId('NO_ID_2')
                             .setDisabled(true)
                             .setStyle(ButtonStyle.Secondary),
