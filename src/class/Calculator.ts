@@ -38,15 +38,7 @@ interface MainOptions {
 export class Calculator {
     readonly data: this = this;
     readonly collector: InteractionCollector<ButtonInteraction> | undefined;
-    main_options: MainOptions = {
-        embeds: [
-            new EmbedBuilder()
-                .setTitle('Calculator')
-                .setDescription('Evaluation: %codeblock%')
-                .setFooter({ text: '© 2023, UtilityXtreme.\n» npm i utilityxtreme@latest' })
-                .setColor('Blurple')
-        ]
-    };
+    main_options: MainOptions = {};
     readonly custom_options: CustomOptions;
     readonly interaction: CommandInteraction;
 
@@ -280,15 +272,23 @@ export class Calculator {
                         )
                 ];
 
-                let data = '';
+                let data = ' ';
 
                 const replyData: InteractionReplyOptions = {
                     content: this.main_options.content?.replace('%codeblock%', codeBlock(data)) || '** **',
-                    embeds: this.main_options.embeds?.map((e) => {
-                        e.data?.description?.replace('%codeblock%', codeBlock(data))
+                    embeds: this.main_options.embeds ?
+                        this.main_options.embeds?.map((e) => {
+                            e.data?.description?.replace('%codeblock%', codeBlock(data))
 
-                        return e;
-                    }) || [],
+                            return e;
+                        })
+                        : [
+                            new EmbedBuilder()
+                                .setTitle('Calculator')
+                                .setDescription('Evaluation: ' + codeBlock(data))
+                                .setFooter({ text: '© 2023, UtilityXtreme.\n» npm i utilityxtreme@latest' })
+                                .setColor('Blurple')
+                        ],
                     files: this.main_options.files?.map((f) => f) || [],
                     components: actionrows,
                     allowedMentions: {
@@ -299,11 +299,19 @@ export class Calculator {
 
                 const sendData: MessageCreateOptions = {
                     content: this.main_options.content?.replace('%codeblock%', codeBlock(data)) || '** **',
-                    embeds: this.main_options.embeds?.map((e) => {
-                        e.data?.description?.replace('%codeblock%', codeBlock(data))
+                    embeds: this.main_options.embeds ?
+                        this.main_options.embeds?.map((e) => {
+                            e.data?.description?.replace('%codeblock%', codeBlock(data))
 
-                        return e;
-                    }) || [],
+                            return e;
+                        })
+                        : [
+                            new EmbedBuilder()
+                                .setTitle('Calculator')
+                                .setDescription('Evaluation: ' + codeBlock(data))
+                                .setFooter({ text: '© 2023, UtilityXtreme.\n» npm i utilityxtreme@latest' })
+                                .setColor('Blurple')
+                        ],
                     files: this.main_options.files?.map((f) => f) || [],
                     components: actionrows,
                     allowedMentions: {
@@ -339,11 +347,19 @@ export class Calculator {
 
                         await i.update({
                             content: this.main_options.content?.replace('%codeblock%', codeBlock(data)) || '** **',
-                            embeds: this.main_options.embeds?.map((e) => {
-                                e.data?.description?.replace('%codeblock%', codeBlock(data))
+                            embeds: this.main_options.embeds ?
+                                this.main_options.embeds?.map((e) => {
+                                    e.data?.description?.replace('%codeblock%', codeBlock(data))
 
-                                return e;
-                            }) || []
+                                    return e;
+                                })
+                                : [
+                                    new EmbedBuilder()
+                                        .setTitle('Calculator')
+                                        .setDescription('Evaluation: ' + codeBlock(data))
+                                        .setFooter({ text: '© 2023, UtilityXtreme.\n» npm i utilityxtreme@latest' })
+                                        .setColor('Blurple')
+                                ],
                         });
 
                         data = '';
@@ -352,31 +368,55 @@ export class Calculator {
 
                         await i.update({
                             content: this.main_options.content?.replace('%codeblock%', codeBlock(data)) || '** **',
-                            embeds: this.main_options.embeds?.map((e) => {
-                                e.data?.description?.replace('%codeblock%', codeBlock(data))
+                            embeds: this.main_options.embeds ?
+                                this.main_options.embeds?.map((e) => {
+                                    e.data?.description?.replace('%codeblock%', codeBlock(data))
 
-                                return e;
-                            }) || []
+                                    return e;
+                                })
+                                : [
+                                    new EmbedBuilder()
+                                        .setTitle('Calculator')
+                                        .setDescription('Evaluation: ' + codeBlock(data))
+                                        .setFooter({ text: '© 2023, UtilityXtreme.\n» npm i utilityxtreme@latest' })
+                                        .setColor('Blurple')
+                                ],
                         });
                     } else if (i.customId === "delete") {
                         data = data.slice(0, data.length - 1);
 
                         await i.update({
                             content: this.main_options.content?.replace('%codeblock%', codeBlock(data)) || '** **',
-                            embeds: this.main_options.embeds?.map((e) => {
-                                e.data?.description?.replace('%codeblock%', codeBlock(data))
+                            embeds: this.main_options.embeds ?
+                                this.main_options.embeds?.map((e) => {
+                                    e.data?.description?.replace('%codeblock%', codeBlock(data))
 
-                                return e;
-                            }) || []
+                                    return e;
+                                })
+                                : [
+                                    new EmbedBuilder()
+                                        .setTitle('Calculator')
+                                        .setDescription('Evaluation: ' + codeBlock(data))
+                                        .setFooter({ text: '© 2023, UtilityXtreme.\n» npm i utilityxtreme@latest' })
+                                        .setColor('Blurple')
+                                ],
                         });
                     } else if (i.customId === "exit") {
                         await i.update({
                             content: this.main_options.content?.replace('%codeblock%', codeBlock(data)) || '** **',
-                            embeds: this.main_options.embeds?.map((e) => {
-                                e.data?.description?.replace('%codeblock%', codeBlock(data))
+                            embeds: this.main_options.embeds ?
+                                this.main_options.embeds?.map((e) => {
+                                    e.data?.description?.replace('%codeblock%', codeBlock(data))
 
-                                return e;
-                            }) || [],
+                                    return e;
+                                })
+                                : [
+                                    new EmbedBuilder()
+                                        .setTitle('Calculator')
+                                        .setDescription('Evaluation: ' + codeBlock(data))
+                                        .setFooter({ text: '© 2023, UtilityXtreme.\n» npm i utilityxtreme@latest' })
+                                        .setColor('Blurple')
+                                ],
                             files: this.main_options.files?.map((f) => f) || [],
                             components: actionrowsdis
                         });
@@ -387,14 +427,22 @@ export class Calculator {
 
                         await i.update({
                             content: this.main_options.content?.replace('%codeblock%', codeBlock(data)) || '** **',
-                            embeds: this.main_options.embeds?.map((e) => {
-                                e.data?.description?.replace('%codeblock%', codeBlock(data))
+                            embeds: this.main_options.embeds ?
+                                this.main_options.embeds?.map((e) => {
+                                    e.data?.description?.replace('%codeblock%', codeBlock(data))
 
-                                return e;
-                            }) || []
+                                    return e;
+                                })
+                                : [
+                                    new EmbedBuilder()
+                                        .setTitle('Calculator')
+                                        .setDescription('Evaluation: ' + codeBlock(data))
+                                        .setFooter({ text: '© 2023, UtilityXtreme.\n» npm i utilityxtreme@latest' })
+                                        .setColor('Blurple')
+                                ],
                         });
                     };
-                    
+
                     return;
                 });
 
@@ -406,11 +454,19 @@ export class Calculator {
                     } else {
                         await this.interaction.editReply({
                             content: this.main_options.content?.replace('%codeblock%', codeBlock(data)) || '** **',
-                            embeds: this.main_options.embeds?.map((e) => {
-                                e.data?.description?.replace('%codeblock%', codeBlock(data))
+                            embeds: this.main_options.embeds ?
+                                this.main_options.embeds?.map((e) => {
+                                    e.data?.description?.replace('%codeblock%', codeBlock(data))
 
-                                return e;
-                            }) || [],
+                                    return e;
+                                })
+                                : [
+                                    new EmbedBuilder()
+                                        .setTitle('Calculator')
+                                        .setDescription('Evaluation: ' + codeBlock(data))
+                                        .setFooter({ text: '© 2023, UtilityXtreme.\n» npm i utilityxtreme@latest' })
+                                        .setColor('Blurple')
+                                ],
                             files: this.main_options.files?.map((f) => f) || [],
                             components: actionrowsdis
                         });
