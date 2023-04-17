@@ -44,7 +44,7 @@ export interface ButtonsBuilderData {
 
 interface CustomOptions {
     filter?: CollectorFilter<[ButtonInteraction]>,
-    time?: number
+    time?: number | undefined
 };
 
 export class ButtonsPaginatorBuilder {
@@ -177,12 +177,10 @@ export class ButtonsPaginatorBuilder {
      * 
      * ```ts
      * {
-     *     channelSend: true, // If you want to send it in the interaction channel.
-     *     editReply: true // If you want to edit the interaction reply.
+     *     channelSend: true, // Interaction channel send.
+     *     editReply: true // Interaction reply edit.
      * }
      * ```
-     * 
-     * **Note:** If **editReply** property is `true` and the interaction is not replied yet, it will ignore this option and the interaction will be replied to avoid any kind of errors.
      * 
      * @param options Custom options of sending the message.
      * @returns {Promise<unknown>}
@@ -238,10 +236,10 @@ export class ButtonsPaginatorBuilder {
                     }
                 };
 
-                if (options?.channelSend) {
+                if (options?.channelSend && !options.editReply) {
                     await this.interaction.channel?.send(sendData);
-                } else if (options?.editReply) {
-                    this.interaction.replied ? await this.interaction.editReply(replyData) : await this.interaction.reply(replyData);
+                } else if (options?.editReply && !options.channelSend) {
+                    await this.interaction.editReply(replyData);
                 } else await this.interaction.reply(replyData);
 
                 let current = 0;

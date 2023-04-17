@@ -32,9 +32,8 @@ yarn add utilityxtreme
 
 ## Preview
 ### 1. Discord bot
-This example below is written in TypeScript.
 
-```js
+```ts
 import {
     Client,
     SlashCommandBuilder,
@@ -44,8 +43,8 @@ import {
     ApplicationCommandsLoader
 } from 'utilityxtreme';
 
-const TOKEN: string = 'Your application bot token';
-const ID: string = 'Your application ID';
+const TOKEN = 'Your application bot token';
+const ID = 'Your application ID';
 
 const client = new Client({
     intents: ['Guilds']
@@ -79,21 +78,78 @@ client.login(TOKEN);
 ```
 
 ### 2. Discord simplified methods
+
 ```ts
 createDiscordTimestamp(Date.now() + 5000, 'R'); // => "in 5 seconds"
-
-new ButtonsPaginatorBuilder(); // Creates a paginator with buttons.
-
-new StringSelectMenuPaginatorBuilder(); // Creates a paginator with dropdown menu.
 
 new FileBuilder(); // Creates a text file for Discord using Buffer.
 
 new BoostDetector(); // Detects whenever a guild member has boost a server.
 
-new Calculator(); // Creates a pre-ready and simple calculator (mathjs not required).
+new Calculator(); // Creates a pre-ready and simple calculator.
 ```
 
-### 3. Useful and cool functions
+### 3. Paginators
+
+Buttons paginator:
+```ts
+import {
+    ButtonStyle,
+    EmbedBuilder
+} from 'discord.js';
+import {
+    ButtonsPaginatorBuilder
+} from 'utilityxtreme';
+
+const pag = new ButtonsPaginatorBuilder(interaction)
+    .addButtons(
+        { label: 'Back', id: 'previous', style: ButtonStyle.Primary },
+        { label: 'Delete', id: 'deletereply', style: ButtonStyle.Danger },
+        { label: 'Next', id: 'next', style: ButtonStyle.Primary }
+    )
+    .addPages(
+        { content: 'Page n° 1' },
+        { embeds: [ new EmbedBuilder().setDescription('Page n° 2') ] },
+        { content: 'Page n° 3', embeds: [ new EmbedBuilder().setDescription('Page n° 3') ] },
+        { content: 'Page n° 4' },
+    );
+
+pag.send({
+    disableButtonsOnLastAndFirstPage: true
+});
+```
+
+Dropdown menu paginator:
+```ts
+import {
+    StringSelectMenuPaginatorBuilder
+} from 'utilityxtreme';
+
+const pag = new StringSelectMenuPaginatorBuilder(interaction, { placeHolder: 'Select a module...' })
+    .addOptions(
+        {
+            message: { content: '/afk...' },
+            component: { label: 'Utility commands' }
+        },
+        {
+            message: { content: '/ban, /kick, /mute...' },
+            component: { label: 'Moderation commands', description: 'Show all moderation commands!' }
+        },
+        {
+            message: { content: '/info, /help...' },
+            component: { label: 'Info commands' }
+        },
+    );
+
+pag.send({
+    home: {
+        content: 'Help command! Click on the menu below.'
+    }
+});
+```
+
+### 4. Useful and cool functions
+
 ```ts
 reverseString('Hello your computer has virus'); // => 'suriv sah retupmoc ruoy olleH'
 
@@ -112,7 +168,8 @@ idGen(); // => 94151456100486147
 calculateString('(5*2)-9+2'); // => '3'
 ```
 
-### 4. Simple JSON database
+### 5. Simple JSON database
+
 ```ts
 import {
     JSONDatabase

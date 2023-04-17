@@ -48,7 +48,7 @@ interface OptionsData {
 interface CustomOptions {
     placeHolder?: string,
     filter?: CollectorFilter<[StringSelectMenuInteraction]>,
-    time?: number,
+    time?: number | undefined,
     customId?: string
 };
 
@@ -139,6 +139,16 @@ export class StringSelectMenuPaginatorBuilder {
 
     /**
      * Sends the message with the dropdown menu.
+     * 
+     * By default, the interaction will be replied. To modify this, you can edit the reply or send the pagination to the interation channel without replying to the user in the options:
+     * 
+     * ```ts
+     * {
+     *     channelSend: true, // Interaction channel send.
+     *     editReply: true // Interaction reply edit.
+     * }
+     * ```
+     * 
      * @param options Custom options of sending the message.
      * @returns {Promise<unknown>}
      */
@@ -191,10 +201,10 @@ export class StringSelectMenuPaginatorBuilder {
                     ephemeral: options?.ephemeral || false
                 };
 
-                if (options?.channelSend) {
+                if (options?.channelSend && !options.editReply) {
                     await this.interaction.channel?.send(sendData);
-                } else if (options?.editReply) {
-                    this.interaction.replied ? await this.interaction.editReply(replyData) : await this.interaction.reply(replyData);
+                } else if (options?.editReply && !options.channelSend) {
+                    await this.interaction.editReply(replyData);
                 } else await this.interaction.reply(replyData);
 
                 this.collector?.on('collect', async (i) => {
