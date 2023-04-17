@@ -243,16 +243,20 @@ export class Calculator {
 
                 const actionrows: ActionRowBuilder<ButtonBuilder>[] = [
                     new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[0]
+                        components[0].map((btn) => btn.setDisabled(false))
                     ),
                     new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[1]
+                        components[1].map((btn) => btn.setDisabled(false))
                     ),
                     new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[2]
+                        components[2].map((btn) => btn.setDisabled(false))
                     ),
-                    new ActionRowBuilder<ButtonBuilder>().addComponents(components[3]),
-                    new ActionRowBuilder<ButtonBuilder>().addComponents(components[4]),
+                    new ActionRowBuilder<ButtonBuilder>().addComponents(
+                        components[3].map((btn) => btn.setDisabled(false))
+                    ),
+                    new ActionRowBuilder<ButtonBuilder>().addComponents(
+                        components[4].map((btn) => btn.setDisabled(false))
+                    ),
                 ];
 
                 const actionrowsdis: ActionRowBuilder<ButtonBuilder>[] = [
@@ -273,7 +277,7 @@ export class Calculator {
                     ),
                 ];
 
-                let data = "Click on the buttons below to start.";
+                let data = " ";
 
                 const replyData: InteractionReplyOptions = {
                     content: this.main_options
