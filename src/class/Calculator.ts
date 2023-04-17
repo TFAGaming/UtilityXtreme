@@ -38,7 +38,7 @@ interface MainOptions {
 export class Calculator {
     readonly data: this = this;
     readonly collector: InteractionCollector<ButtonInteraction> | undefined;
-    main_options: MainOptions = {};
+    main_options: MainOptions | undefined = undefined;
     readonly custom_options: CustomOptions;
     readonly interaction: CommandInteraction;
 
@@ -108,84 +108,103 @@ export class Calculator {
                         new ButtonBuilder()
                             .setLabel("AC")
                             .setCustomId("ac")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Danger),
                         new ButtonBuilder()
                             .setLabel("Del")
                             .setCustomId("delete")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Danger),
                         new ButtonBuilder()
                             .setLabel("Exit")
                             .setCustomId("exit")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Danger),
                         new ButtonBuilder()
                             .setLabel("(")
                             .setCustomId("(")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
                             .setLabel(")")
                             .setCustomId(")")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                     ],
                     [
                         new ButtonBuilder()
                             .setLabel("1")
                             .setCustomId("1")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("2")
                             .setCustomId("2")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("3")
                             .setCustomId("3")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("+")
                             .setCustomId("+")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
                             .setLabel("/")
                             .setCustomId("/")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                     ],
                     [
                         new ButtonBuilder()
                             .setLabel("4")
                             .setCustomId("4")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("5")
                             .setCustomId("5")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("6")
                             .setCustomId("6")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("-")
                             .setCustomId("-")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
                             .setLabel("%")
                             .setCustomId("%")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                     ],
                     [
                         new ButtonBuilder()
                             .setLabel("7")
                             .setCustomId("7")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("8")
                             .setCustomId("8")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("9")
                             .setCustomId("9")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("*")
                             .setCustomId("*")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
                             .setLabel("~")
@@ -197,18 +216,22 @@ export class Calculator {
                         new ButtonBuilder()
                             .setLabel(".")
                             .setCustomId(".")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("0")
                             .setCustomId("0")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("00")
                             .setCustomId("00")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("=")
                             .setCustomId("=")
+                            .setDisabled(false)
                             .setStyle(ButtonStyle.Success),
                         new ButtonBuilder()
                             .setLabel("~")
@@ -268,7 +291,7 @@ export class Calculator {
                             return e;
                         })
                         : [],
-                    files: this.main_options.files?.map((f) => f) || [],
+                    files: this.main_options?.files?.map((f) => f) || [],
                     components: actionrows,
                     allowedMentions: {
                         repliedUser: options?.mentionRepliedUser || true,
@@ -292,7 +315,7 @@ export class Calculator {
                             return e;
                         })
                         : [],
-                    files: this.main_options.files?.map((f) => f) || [],
+                    files: this.main_options?.files?.map((f) => f) || [],
                     components: actionrows,
                     allowedMentions: {
                         repliedUser: options?.mentionRepliedUser || true,
@@ -336,7 +359,7 @@ export class Calculator {
                                     )
                                     : "** **"
                                 : `Evaluation: ${codeBlock(data)}`,
-                            embeds: this.main_options.embeds
+                            embeds: this.main_options && this.main_options.embeds
                                 ? this.main_options.embeds?.map((e) => {
                                     e.data?.description?.replace(
                                         "%codeblock%",
@@ -418,7 +441,7 @@ export class Calculator {
                                     return e;
                                 })
                                 : [],
-                            files: this.main_options.files?.map((f) => f) || []
+                            files: this.main_options?.files?.map((f) => f) || []
                         });
                     }
 
@@ -447,7 +470,7 @@ export class Calculator {
                                     return e;
                                 })
                                 : [],
-                            files: this.main_options.files?.map((f) => f) || [],
+                            files: this.main_options?.files?.map((f) => f) || [],
                             components: actionrowsdis,
                         });
                     }
