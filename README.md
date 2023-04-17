@@ -18,7 +18,9 @@
 - [**Node.js**](https://nodejs.org/en/download/) v16.9.0 or above.
 - [**discord.js**](https://www.npmjs.com/package/discord.js) v14.9.0 or above.
 
-> **Optional:** Use TypeScript instead of JavaScript.
+> **Optional:**
+> 1. Use TypeScript instead of JavaScript.
+> 2. Use an IDE with a powerful Intellisense (ex: Visual Studio Code).
 
 ## Installation
 
@@ -103,9 +105,9 @@ import {
 
 const pag = new ButtonsPaginatorBuilder(interaction)
     .addButtons(
-        { label: 'Back', id: 'previous', style: ButtonStyle.Primary },
-        { label: 'Delete', id: 'deletereply', style: ButtonStyle.Danger },
-        { label: 'Next', id: 'next', style: ButtonStyle.Primary }
+        { label: 'Back', id: 'previous', type: ButtonStyle.Primary },
+        { label: 'Delete', id: 'deletereply', type: ButtonStyle.Danger },
+        { label: 'Next', id: 'next', type: ButtonStyle.Primary }
     )
     .addPages(
         { content: 'Page n° 1' },
@@ -118,6 +120,8 @@ pag.send({
     disableButtonsOnLastAndFirstPage: true
 });
 ```
+
+<img src="https://media.discordapp.net/attachments/1053957993919684623/1097576504784867480/2023-04-17_18_32_57-7_Discord___general___DiscordJS-Guide-modified.png">
 
 Dropdown menu paginator:
 ```ts
@@ -147,6 +151,10 @@ pag.send({
     }
 });
 ```
+
+<img src="https://media.discordapp.net/attachments/1053957993919684623/1097576504537387128/2023-04-17_18_34_22-7_Discord___general___DiscordJS-Guide-modified.png">
+
+<img src="https://media.discordapp.net/attachments/1053957993919684623/1097576504243793940/2023-04-17_18_34_36-7_Discord___general___DiscordJS-Guide-modified.png">
 
 ### 4. Useful and cool functions
 
