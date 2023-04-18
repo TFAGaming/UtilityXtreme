@@ -1,4 +1,4 @@
-import { DJSError, errorkeys } from "../error";
+import { DJSError, errorkeys } from "../core/error";
 import {
     readFileSync,
     writeFileSync

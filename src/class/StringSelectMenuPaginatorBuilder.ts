@@ -11,7 +11,7 @@ import {
     StringSelectMenuBuilder,
     StringSelectMenuInteraction
 } from "discord.js";
-import { DJSError, errorkeys } from "../error";
+import { DJSError, errorkeys } from "../core/error";
 
 interface SendOptionsData {
     home?: {

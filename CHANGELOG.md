@@ -1,10 +1,16 @@
+CHANGELOG.md is a file where it logs all the latest file changes and their new version from the npm registry.
+
 ## v1.4.0-prerelease-x
 - New class: `Calculator`.
+- `CommandInteraction#channel#send` and `CommandInteraction#editReply` are now editable in the classes: `StringSelectMenuPaginatorBuilder`, `ButtonsPaginatorBuilder`, and `Calculator`.
+- The button ID `deletereply` for the class `ButtonsPaginatorBuilder` is now fixed.
+- Events from the class `ApplicationCommandsLoader` fixed.
+- Add **keywords** to `package.json` file.
 
 ## v1.3.3
 - The class `ButtonsPaginatorBuilder` now supports the reply types: Whenever the interaction is replied, it will edit it. Else, it will just reply.
 
-## v1.3.0 => 1.3.2 [DEPRECATED]
+## v1.3.0 until v1.3.2 [DEPRECATED]
 - Fixing the class `ButtonsPaginatorBuilder`.
 
 ## v1.3.0-prerelease-x [DEPRECATED]

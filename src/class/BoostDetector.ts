@@ -1,6 +1,6 @@
 import { Client, GuildMember } from 'discord.js';
 import { EventEmitter } from 'events';
-import { DJSError, errorkeys } from '../error';
+import { DJSError, errorkeys } from '../core/error';
 
 interface BoostDetectorEvents {
     'boostCreate': [member: GuildMember]

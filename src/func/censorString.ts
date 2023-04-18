@@ -1,4 +1,4 @@
-import { DJSError, errorkeys } from "../error";
+import { DJSError, errorkeys } from "../core/error";
 
 /**
  * Replaces specific characters by '*' from a string.
@@ -8,7 +8,7 @@ import { DJSError, errorkeys } from "../error";
  * @returns {string}
  */
 
-export function censorString(string: string, words: string[], replacer?: string) {
+export function censorString(string: string, words: string[], replacer?: string): string {
     if (!string) throw new DJSError(errorkeys.MissingParam);
     if (!words) throw new DJSError(errorkeys.MissingParam);
 

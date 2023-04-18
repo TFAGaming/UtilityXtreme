@@ -1,4 +1,4 @@
-import { DJSError, errorkeys } from "../error"
+import { DJSError, errorkeys } from "../core/error"
 
 interface RandomizedStringOptions {
     includesInteger?: boolean,
@@ -21,7 +21,7 @@ interface RandomizedStringOptions {
  * ```
  */
 
-export function randomizedString(length: number, options?: RandomizedStringOptions) {
+export function randomizedString(length: number, options?: RandomizedStringOptions): string {
     if (!length) throw new DJSError(errorkeys.MissingParam);
 
     if (typeof length !== 'number') throw new DJSError(errorkeys.TypeError, 'number');

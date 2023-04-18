@@ -3,6 +3,10 @@
 </h1>
 <p align="center">
     <img src="https://nodei.co/npm/utilityxtreme.png?downloadRank=true&downloads=true&downloadRank=true&stars=true">
+
+<h3 align="center">
+    The friendly package to start with your Discord bot application.
+</h3>
 </p>
 
 **UtilityXtreme** is a library that simplifies of creating your own Discord bot application.
@@ -12,15 +16,31 @@
 - Supportable with latest **discord.js** version (v14).
 - Open-source project.
 - Feature-rich.
-- **100%** built with TypeScript.
+- **100%** written in TypeScript.
+
+## Table of Contents
+- [UtilityXtreme](#)
+    - [Table of Contents](#table-of-contents)
+    - [Requirements](#requirements)
+        - [Optional](#optional)
+    - [Installation](#installation)
+    - [Documentation](#documentation)
+    - [Modules preview](#modules-preview)
+    - [Example Discord Bot](#example-discord-bot)
+        - [TypeScript](#typescript)
+        - [JavaScript (CommonJS)](#javascript-commonjs)
+    - [Developers](#developers)
+    - [Other Information](#other-information)
+        - [License](#license)
+        - [Development](#development)
 
 ## Requirements
 - [**Node.js**](https://nodejs.org/en/download/) v16.9.0 or above.
 - [**discord.js**](https://www.npmjs.com/package/discord.js) v14.9.0 or above.
 
-> **Optional:**
-> 1. Use TypeScript instead of JavaScript.
-> 2. Use an IDE with a powerful Intellisense (ex: Visual Studio Code).
+### Optional:
+- Use TypeScript instead of JavaScript for the typings.
+- Use an IDE with a powerful Intellisense (example: Visual Studio code) for the typings.
 
 ## Installation
 
@@ -32,197 +52,123 @@ yarn add utilityxtreme
 ## Documentation
 [Click here](https://tfagaming.github.io/utilityxtreme/) to visit the documentation website.
 
-## Preview
-### 1. Discord bot
+## Modules preview
 
+- Modules
+    - Classes
+        - `ApplicationCommandsLoader`: Loads application commands to Discord.
+        - `BoostDetector`: Detects whenever a guild member has boosted or has removed a boost from a guild.
+        - `ButtonsPaginatorBuilder`: An advanced paginator using buttons.
+        - `Calculator`: A simple and pre-ready calculator (**mathjs** not required).
+        - `FileBuilder`: Creates a file for Discord, by using **Buffer**.
+        - `JSONDatabase`: The methods are similar to **Map** but the data is saved in a JSON file.
+        - `StringSelectMenuPaginatorBuilder`: An advanced paginator using dropdown/select menus.
+    - Functions
+        - `calculateString`: Calculates some simple math equations.
+        - `censorString`: Replaces some characters in a string with '*' (changeable).
+        - `createDiscordTimestamp`: Creates a Discord timestamp.
+        - `hexColorGen`: Generates a random HEX color code.
+        - `idGen`: Generates a random integer.
+        - `isDiscordInviteURL`: Detects whenever a string includes a Discord invite URL.
+        - `isWebURL`: Detects whenever a string includes any web URL.
+        - `randomizedString`: Generates some random characters.
+        - `reverseString`: Reverses a string.
+        - **async** `sleep`: Sleeps for a specific time.
+
+## Example Discord Bot
+### TypeScript:
 ```ts
-import {
-    Client,
-    SlashCommandBuilder,
-    CommandInteraction
-} from 'discord.js';
-import {
-    ApplicationCommandsLoader
-} from 'utilityxtreme';
+import { Client, SlashCommandBuilder, CommandInteraction } from 'discord.js';
+import { ApplicationCommandsLoader } from 'utilityxtreme';
 
-const TOKEN = 'Your application bot token';
-const ID = 'Your application ID';
+const botToken = "Your bot token";
+const botId = "Your bot id";
 
-const client = new Client({
+const client: Client = new Client({
     intents: ['Guilds']
 });
 
 const commands: SlashCommandBuilder[] = [
     new SlashCommandBuilder()
         .setName('ping')
-        .setDescription('Replies with pong!')
+        .setDescription('Replies with Pong!')
         .toJSON()
 ];
 
-const loader = new ApplicationCommandsLoader(TOKEN, ID, commands);
+const loader: ApplicationCommandsLoader = new ApplicationCommandsLoader(botToken, botId, commands);
 
-loader.on('loaderStarted', () => { console.log('[!] Started loading application commands...') });
-loader.on('loaderFinished', () => { console.log('[!] Finished loading application commands.') });
+loader.on('loaderStarted', () => { console.log('Started loading application commands...') });
+loader.on('loaderFinished', () => { console.log('Finished loading application commands.') });
 
-loader.start();
+loader.start().catch(console.error);
 
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
     if ((interaction as CommandInteraction).commandName === 'ping') {
         await interaction.reply({ content: 'Pong!' });
-
-        return;
     };
 });
 
-client.login(TOKEN);
+client.login(botToken);
 ```
 
-### 2. Discord simplified methods
+### JavaScript: (CommonJS)
 
-```ts
-createDiscordTimestamp(Date.now() + 5000, 'R'); // => "in 5 seconds"
+```js
+const { Client, SlashCommandBuilder } = require('discord.js');
+const { ApplicationCommandsLoader } = require('utilityxtreme');
 
-new FileBuilder(); // Creates a text file for Discord using Buffer.
+const botToken = "Your bot token";
+const botId = "Your bot id";
 
-new BoostDetector(); // Detects whenever a guild member has boost a server.
-
-new Calculator(); // Creates a pre-ready and simple calculator.
-```
-
-### 3. Paginators
-
-Buttons paginator:
-```ts
-import {
-    ButtonStyle,
-    EmbedBuilder
-} from 'discord.js';
-import {
-    ButtonsPaginatorBuilder
-} from 'utilityxtreme';
-
-const pag = new ButtonsPaginatorBuilder(interaction)
-    .addButtons(
-        { label: 'Back', id: 'previous', type: ButtonStyle.Primary },
-        { label: 'Delete', id: 'deletereply', type: ButtonStyle.Danger },
-        { label: 'Next', id: 'next', type: ButtonStyle.Primary }
-    )
-    .addPages(
-        { content: 'Page n° 1' },
-        { embeds: [ new EmbedBuilder().setDescription('Page n° 2') ] },
-        { content: 'Page n° 3', embeds: [ new EmbedBuilder().setDescription('Page n° 3') ] },
-        { content: 'Page n° 4' },
-    );
-
-pag.send({
-    disableButtonsOnLastAndFirstPage: true
+const client = new Client({
+    intents: ['Guilds']
 });
-```
 
-<img src="https://media.discordapp.net/attachments/1053957993919684623/1097576504784867480/2023-04-17_18_32_57-7_Discord___general___DiscordJS-Guide-modified.png">
+const commands = [
+    new SlashCommandBuilder()
+        .setName('ping')
+        .setDescription('Replies with Pong!')
+        .toJSON()
+];
 
-Dropdown menu paginator:
-```ts
-import {
-    StringSelectMenuPaginatorBuilder
-} from 'utilityxtreme';
+const loader = new ApplicationCommandsLoader(botToken, botId, commands);
 
-const pag = new StringSelectMenuPaginatorBuilder(interaction, { placeHolder: 'Select a module...' })
-    .addOptions(
-        {
-            message: { content: '/afk...' },
-            component: { label: 'Utility commands' }
-        },
-        {
-            message: { content: '/ban, /kick, /mute...' },
-            component: { label: 'Moderation commands', description: 'Show all moderation commands!' }
-        },
-        {
-            message: { content: '/info, /help...' },
-            component: { label: 'Info commands' }
-        },
-    );
+loader.on('loaderStarted', () => { console.log('Started loading application commands...') });
+loader.on('loaderFinished', () => { console.log('Finished loading application commands.') });
 
-pag.send({
-    home: {
-        content: 'Help command! Click on the menu below.'
-    }
+loader.start().catch(console.error);
+
+client.on('interactionCreate', async (interaction) => {
+    if (!interaction.isChatInputCommand()) return;
+
+    if (interaction.commandName === 'ping') {
+        await interaction.reply({ content: 'Pong!' });
+    };
 });
-```
 
-<img src="https://media.discordapp.net/attachments/1053957993919684623/1097576504537387128/2023-04-17_18_34_22-7_Discord___general___DiscordJS-Guide-modified.png">
-
-<img src="https://media.discordapp.net/attachments/1053957993919684623/1097576504243793940/2023-04-17_18_34_36-7_Discord___general___DiscordJS-Guide-modified.png">
-
-### 4. Useful and cool functions
-
-```ts
-reverseString('Hello your computer has virus'); // => 'suriv sah retupmoc ruoy olleH'
-
-censorString('aw hell nah', ['hell']); // => 'aw **** nah'
-
-isDiscordInviteURL('Join my server! https://discord.gg/djs') // => true
-
-isWebURL('welp nobody asked') // => false
-
-await sleep(5000); // Sleeps for 5 seconds (in async function)
-
-randomizedString(10, { includesInteger: false }); // => 'AgdvFokcLE'
-
-idGen(); // => 94151456100486147
-
-calculateString('(5*2)-9+2'); // => '3'
-```
-
-### 5. Simple JSON database
-
-```ts
-import {
-    JSONDatabase
-} from 'utilityxtreme';
-
-const db = new JSONDatabase('./src/database.json'); // (Creates the database and load the methods)
-
-db.set('name', 'T.F.A'); // => "name": "T.F.A",
-
-db.set('age', 16); // => "age": 16,
-
-db.keys(); // => ['name', 'age']
-
-db.get('name'); // => 'T.F.A'
-
-db.del('name'); // (Deletes the key)
-
-db.get('name'); // => undefined
-
-db.set('langs', ['JS', 'TS', 'Rust']);
-
-db.push('langs', 'PY'); // => "langs": ["JS", "TS", "Rust", "PY"],
-
-db.pull('langs', (item) => item !== 'Rust'); // => "langs": ["JS", "TS", "PY"],
+client.login(botToken);
 ```
 
 ## Developers
 - [**T.F.A#7524**](https://www.github.com/TFAGaming): Head Developer (ツ)
 
 ## Support
+Did you find a problem (or a bug), or want to share some new ideas? Join the Discord server below!
+
 <a href="https://discord.gg/E6VFACWu5V">
     <img src="https://invidget.switchblade.xyz/E6VFACWu5V">
 </a>
 
+You can create an [Issue](https://github.com/TFAGaming/UtilityXtreme/issues) or a [Pull Request](https://github.com/TFAGaming/UtilityXtreme/pulls) instead on GitHub.
+
 ## Other information
-
-### Contributing:
-
-If you have found an issue or a bug, please double-check the documentation and make sure that it hasn't been already reported/suggested.
-
-- Create a new [Issue](https://github.com/TFAGaming/UtilityXtreme/issues) or [Pull Request](https://github.com/TFAGaming/UtilityXtreme/pulls).
-- Help other members that are in-need on the [Discord server](https://discord.gg/E6VFACWu5V).
 
 ### License:
 This project is under the license **GPL-3.0**.
 
 ### Development:
 This package is not associated with the [**discord.js**](https://www.npmjs.com/package/discord.js) development team.
+
+[↑ Back to top](#)

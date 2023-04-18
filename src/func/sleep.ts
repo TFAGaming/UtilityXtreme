@@ -1,4 +1,4 @@
-import { DJSError, errorkeys } from "../error";
+import { DJSError, errorkeys } from "../core/error";
 
 /**
  * Sleep function, like the Python library **time** (must be in an `async` function). 🛏️
@@ -16,7 +16,7 @@ import { DJSError, errorkeys } from "../error";
  * ```
  */
 
-export function sleep(ms: number) {
+export function sleep(ms: number): Promise<unknown> {
     if (!ms) throw new DJSError(errorkeys.MissingParam);
 
     if (typeof ms !== 'number') throw new DJSError(errorkeys.TypeError, 'number');

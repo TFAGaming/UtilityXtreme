@@ -13,7 +13,7 @@ import {
     ComponentEmojiResolvable,
     MessageCreateOptions
 } from 'discord.js';
-import { DJSError, errorkeys } from '../error/index';
+import { DJSError, errorkeys } from '../core/error/index';
 
 interface SendOptions {
     onEnd?: {
@@ -35,7 +35,7 @@ interface PagesData {
     files?: AttachmentBuilder[]
 };
 
-export interface ButtonsBuilderData {
+interface ButtonsBuilderData {
     id: string,
     label: string,
     emoji?: ComponentEmojiResolvable,
@@ -387,7 +387,7 @@ export class ButtonsPaginatorBuilder {
                     };
 
                     if (i.customId === 'deletereply') {
-                        await i.deleteReply();
+                        await this.interaction.deleteReply();
 
                         return;
                     };

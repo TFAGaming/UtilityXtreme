@@ -1,5 +1,5 @@
 import { AttachmentBuilder } from "discord.js";
-import { DJSError, errorkeys } from "../error";
+import { DJSError, errorkeys } from "../core/error";
 
 export class FileBuilder {
     /**

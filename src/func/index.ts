@@ -7,3 +7,4 @@ export * from './sleep';
 export * from './randomizedString';
 export * from './idGen';
 export * from './calculateString';
+export * from './hexColorGen';

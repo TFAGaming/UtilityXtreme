@@ -1,4 +1,4 @@
-import { DJSError, errorkeys } from "../error";
+import { DJSError, errorkeys } from "../core/error";
 
 /**
  * Reverses a string.
@@ -6,7 +6,7 @@ import { DJSError, errorkeys } from "../error";
  * @returns {string}
  */
 
-export function reverseString(string: string) {
+export function reverseString(string: string): string {
     if (!string) throw new DJSError(errorkeys.MissingParam);
 
     if (typeof string !== 'string') throw new DJSError(errorkeys.TypeError, 'string');

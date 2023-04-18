@@ -1,4 +1,4 @@
-import { DJSError, errorkeys } from "../error";
+import { DJSError, errorkeys } from "../core/error";
 import { TimestampStyles } from "../global/enums";
 
 /**
@@ -8,7 +8,7 @@ import { TimestampStyles } from "../global/enums";
  * @returns {string}
  */
 
-export function createDiscordTimestamp(timestamp: number, type?: TimestampStyles) {
+export function createDiscordTimestamp(timestamp: number, type?: TimestampStyles): string {
     if (!timestamp) throw new DJSError(errorkeys.MissingParam);
 
     if (typeof timestamp !== 'number') throw new DJSError(errorkeys.TypeError, 'number');

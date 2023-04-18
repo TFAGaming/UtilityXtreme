@@ -1,4 +1,4 @@
-import { DJSError, errorkeys } from "../error";
+import { DJSError, errorkeys } from "../core/error";
 
 /**
  * Checks a string whenever it includes a website URL.
@@ -7,7 +7,7 @@ import { DJSError, errorkeys } from "../error";
  * @returns {boolean}
  */
 
-export function isWebURL(content: string, ignoreURLs?: string[]) {
+export function isWebURL(content: string, ignoreURLs?: string[]): boolean {
     if (!content) throw new DJSError(errorkeys.MissingParam);
 
     if (typeof content !== 'string') throw new DJSError(errorkeys.TypeError, 'string');

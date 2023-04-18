@@ -13,7 +13,7 @@ import {
     MessageCreateOptions,
     codeBlock,
 } from "discord.js";
-import { DJSError, errorkeys } from "../error/index";
+import { DJSError, errorkeys } from "../core/error/index";
 import { calculateString } from "../func";
 
 interface CustomOptions {
@@ -43,7 +43,7 @@ export class Calculator {
     readonly interaction: CommandInteraction;
 
     /**
-     * Creates a Buttons paginator using `CommandInteraction#channel#createMessageComponentCollector()` from **discord.js**.
+     * Creates a Calculator with buttons by using `CommandInteraction#channel#createMessageComponentCollector()` from **discord.js**.
      *
      * @param interaction The interaction, extends from the class `CommandInteraction` from **discord.js**.
      * @param options Custom options. Default: `{ time: 300000 }`
@@ -108,103 +108,84 @@ export class Calculator {
                         new ButtonBuilder()
                             .setLabel("AC")
                             .setCustomId("ac")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Danger),
                         new ButtonBuilder()
                             .setLabel("Del")
                             .setCustomId("delete")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Danger),
                         new ButtonBuilder()
                             .setLabel("Exit")
                             .setCustomId("exit")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Danger),
                         new ButtonBuilder()
                             .setLabel("(")
                             .setCustomId("(")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
                             .setLabel(")")
                             .setCustomId(")")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                     ],
                     [
                         new ButtonBuilder()
                             .setLabel("1")
                             .setCustomId("1")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("2")
                             .setCustomId("2")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("3")
                             .setCustomId("3")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("+")
                             .setCustomId("+")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
                             .setLabel("/")
                             .setCustomId("/")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                     ],
                     [
                         new ButtonBuilder()
                             .setLabel("4")
                             .setCustomId("4")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("5")
                             .setCustomId("5")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("6")
                             .setCustomId("6")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("-")
                             .setCustomId("-")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
                             .setLabel("%")
                             .setCustomId("%")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                     ],
                     [
                         new ButtonBuilder()
                             .setLabel("7")
                             .setCustomId("7")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("8")
                             .setCustomId("8")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("9")
                             .setCustomId("9")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("*")
                             .setCustomId("*")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
                             .setLabel("~")
@@ -216,22 +197,18 @@ export class Calculator {
                         new ButtonBuilder()
                             .setLabel(".")
                             .setCustomId(".")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("0")
                             .setCustomId("0")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("00")
                             .setCustomId("00")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Secondary),
                         new ButtonBuilder()
                             .setLabel("=")
                             .setCustomId("=")
-                            .setDisabled(false)
                             .setStyle(ButtonStyle.Success),
                         new ButtonBuilder()
                             .setLabel("~")
@@ -243,39 +220,21 @@ export class Calculator {
 
                 const actionrows: ActionRowBuilder<ButtonBuilder>[] = [
                     new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[0].map((btn) => btn.setDisabled(false))
+                        components[0]
                     ),
                     new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[1].map((btn) => btn.setDisabled(false))
+                        components[1]
                     ),
                     new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[2].map((btn) => btn.setDisabled(false))
+                        components[2]
                     ),
                     new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[3].map((btn) => btn.setDisabled(false))
+                        components[3]
                     ),
                     new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[4].map((btn) => btn.setDisabled(false))
+                        components[4]
                     ),
-                ];
-
-                const actionrowsdis: ActionRowBuilder<ButtonBuilder>[] = [
-                    new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[0].map((btn) => btn.setDisabled(true))
-                    ),
-                    new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[1].map((btn) => btn.setDisabled(true))
-                    ),
-                    new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[2].map((btn) => btn.setDisabled(true))
-                    ),
-                    new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[3].map((btn) => btn.setDisabled(true))
-                    ),
-                    new ActionRowBuilder<ButtonBuilder>().addComponents(
-                        components[4].map((btn) => btn.setDisabled(true))
-                    ),
-                ];
+                ]
 
                 let data = " ";
 
@@ -424,8 +383,7 @@ export class Calculator {
                     } else {
                         const id = i.customId;
 
-                        if (id === "=" || id === "ac" || id === "exit" || id === "delete")
-                            return;
+                        if (id === "=" || id === "ac" || id === "exit" || id === "delete") return;
 
                         data += id;
 
@@ -475,7 +433,23 @@ export class Calculator {
                                 })
                                 : [],
                             files: this.main_options?.files?.map((f) => f) || [],
-                            components: actionrowsdis,
+                            components: [
+                                new ActionRowBuilder<ButtonBuilder>().addComponents(
+                                    components[0].map((btn) => btn.setDisabled(true))
+                                ),
+                                new ActionRowBuilder<ButtonBuilder>().addComponents(
+                                    components[1].map((btn) => btn.setDisabled(true))
+                                ),
+                                new ActionRowBuilder<ButtonBuilder>().addComponents(
+                                    components[2].map((btn) => btn.setDisabled(true))
+                                ),
+                                new ActionRowBuilder<ButtonBuilder>().addComponents(
+                                    components[3].map((btn) => btn.setDisabled(true))
+                                ),
+                                new ActionRowBuilder<ButtonBuilder>().addComponents(
+                                    components[4].map((btn) => btn.setDisabled(true))
+                                ),
+                            ],
                         });
                     }
 

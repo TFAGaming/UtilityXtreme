@@ -1,6 +1,12 @@
 import { REST, Routes } from "discord.js";
 import { EventEmitter } from 'events';
-import { DJSError, errorkeys } from "../error";
+import { DJSError, errorkeys } from "../core/error";
+
+interface LoaderEvents {
+    'loaderStarted': [],
+    'loaderFinished': [],
+    'loaderRejected': []
+};
 
 export class ApplicationCommandsLoader extends EventEmitter {
     readonly clientToken: string = '';
@@ -68,4 +74,7 @@ export class ApplicationCommandsLoader extends EventEmitter {
             };
         });
     };
+
+    public on<K extends keyof LoaderEvents>(eventName: K, listener: (...args: LoaderEvents[K]) => void) { return this };
+    public once<K extends keyof LoaderEvents>(eventName: K, listener: (...args: LoaderEvents[K]) => void) { return this };
 };

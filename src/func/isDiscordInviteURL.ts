@@ -1,4 +1,4 @@
-import { DJSError, errorkeys } from "../error";
+import { DJSError, errorkeys } from "../core/error";
 
 /**
  * Checks a string whenever it includes a Discord server invite URL.
@@ -7,7 +7,7 @@ import { DJSError, errorkeys } from "../error";
  * @returns {boolean}
  */
 
-export function isDiscordInviteURL(content: string, ignoreURLs?: string[]) {
+export function isDiscordInviteURL(content: string, ignoreURLs?: string[]): boolean {
     if (!content) throw new DJSError(errorkeys.MissingParam);
 
     if (typeof content !== 'string') throw new DJSError(errorkeys.TypeError, 'string');
