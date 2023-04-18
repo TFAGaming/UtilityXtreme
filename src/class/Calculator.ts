@@ -236,7 +236,7 @@ export class Calculator {
                     ),
                 ]
 
-                let data = " ";
+                let data = "";
 
                 const replyData: InteractionReplyOptions = {
                     content: this.main_options
@@ -335,9 +335,9 @@ export class Calculator {
                             components: actionrows,
                         });
 
-                        data = " ";
+                        data = "";
                     } else if (i.customId === "ac") {
-                        data = " ";
+                        data = "";
 
                         await i.update({
                             content: this.main_options

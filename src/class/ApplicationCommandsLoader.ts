@@ -74,7 +74,4 @@ export class ApplicationCommandsLoader extends EventEmitter {
             };
         });
     };
-
-    public on<K extends keyof LoaderEvents>(eventName: K, listener: (...args: LoaderEvents[K]) => void) { return this };
-    public once<K extends keyof LoaderEvents>(eventName: K, listener: (...args: LoaderEvents[K]) => void) { return this };
 };

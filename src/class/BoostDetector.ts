@@ -36,8 +36,6 @@ export class BoostDetector extends EventEmitter {
                 return;
             };
         });
-    };
 
-    public on<K extends keyof BoostDetectorEvents>(eventName: K, listener: (...args: BoostDetectorEvents[K]) => void) { return this };
-    public once<K extends keyof BoostDetectorEvents>(eventName: K, listener: (...args: BoostDetectorEvents[K]) => void) { return this };
+    };
 };
