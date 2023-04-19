@@ -15,7 +15,7 @@ import {
 } from 'discord.js';
 import { DJSError, errorkeys } from '../core/error/index';
 
-interface SendOptions {
+interface ButtonsPaginatorSendOptions {
     onEnd?: {
         content?: string,
         embeds?: EmbedBuilder[],
@@ -29,20 +29,20 @@ interface SendOptions {
     disableButtonsOnLastAndFirstPage?: boolean
 };
 
-interface PagesData {
+interface ButtonsPaginatorPageStructure {
     content?: string,
     embeds?: EmbedBuilder[],
     files?: AttachmentBuilder[]
 };
 
-interface ButtonsBuilderData {
+interface ButtonsPaginatorButtonStructure {
     id: string,
     label: string,
     emoji?: ComponentEmojiResolvable,
     type: ButtonStyle
 };
 
-interface CustomOptions {
+interface ButtonsPaginatorConstructorOptions {
     filter?: CollectorFilter<[ButtonInteraction]>,
     time?: number | undefined
 };
@@ -50,19 +50,12 @@ interface CustomOptions {
 export class ButtonsPaginatorBuilder {
     readonly data: this = this;
     readonly collector: InteractionCollector<ButtonInteraction> | undefined;
-    buttons_data: ButtonsBuilderData[] = [];
-    pages_data: PagesData[] = [];
-    readonly custom_options: CustomOptions;
+    buttons_data: ButtonsPaginatorButtonStructure[] = [];
+    pages_data: ButtonsPaginatorPageStructure[] = [];
+    readonly custom_options: ButtonsPaginatorConstructorOptions;
     readonly interaction: CommandInteraction;
 
-    /**
-     * Creates a Buttons paginator using `CommandInteraction#channel#createMessageComponentCollector()` from **discord.js**.
-     * 
-     * @param interaction The interaction, extends from the class `CommandInteraction` from **discord.js**.
-     * @param options Custom options. Default: `{ time: 60000 }`
-     */
-
-    constructor(interaction: CommandInteraction, options?: CustomOptions) {
+    constructor(interaction: CommandInteraction, options?: ButtonsPaginatorConstructorOptions) {
         if (!interaction) throw new DJSError(errorkeys.MissingParam);
 
         this.interaction = interaction;
@@ -76,25 +69,7 @@ export class ButtonsPaginatorBuilder {
         this.custom_options = options || {};
     };
 
-    /**
-     * Adds buttons to the components message.
-     * 
-     * Use the following button IDs to make them working: (All in lowercase)
-     * ```yaml
-     * next: Next page.
-     * previous: Previous page.
-     * firstpage: Go to the first page.
-     * lastpage: Go to the last page.
-     * deletereply: Deletes the reply.
-     * disableall: Disables the buttons.
-     * ```
-     * 
-     * **Note:** The difference between `addButtons` and `setButtons` that the first method (`addButtons`) adds multiple buttons (5 max) at same time to the buttons array, while the other (`setButtons`) overwrites the array to an empty array and sets new buttons.
-     * @param data The data.
-     * @returns {this}
-     */
-
-    public addButtons(...data: ButtonsBuilderData[]) {
+    public addButtons(...data: ButtonsPaginatorButtonStructure[]) {
         if (this.buttons_data.length > 5) throw new DJSError(errorkeys.LengthMaxReached, '5');
 
         data.forEach((æ) => {
@@ -106,25 +81,7 @@ export class ButtonsPaginatorBuilder {
         return this;
     };
 
-    /**
-     * Set buttons to the components message.
-     * 
-     * Use the following button IDs to make them working: (All in lowercase)
-     * ```yaml
-     * next: Next page.
-     * previous: Previous page.
-     * firstpage: Go to the first page.
-     * lastpage: Go to the last page.
-     * deletereply: Deletes the reply.
-     * disableall: Disables the buttons.
-     * ```
-     * 
-     * **Note:** The difference between `addButtons` and `setButtons` that the first method (`addButtons`) adds multiple buttons (5 max) at same time to the buttons array, while the other (`setButtons`) overwrites the array to an empty array and sets new buttons.
-     * @param data The data.
-     * @returns {this}
-     */
-
-    public setButtons(...data: ButtonsBuilderData[]) {
+    public setButtons(...data: ButtonsPaginatorButtonStructure[]) {
         this.buttons_data = [];
 
         data.forEach((æ) => {
@@ -136,15 +93,7 @@ export class ButtonsPaginatorBuilder {
         return this;
     };
 
-    /**
-     * Adds pages to the paginator.
-     * 
-     * **Note:** The difference between `addPages` and `setPages` that the first method (`addPages`) adds multiple pages at same time to the pages array, while the other (`setPages`) overwrites the array to an empty array and sets new pages.
-     * @param data The data.
-     * @returns {this}
-     */
-
-    public addPages(...data: PagesData[]) {
+    public addPages(...data: ButtonsPaginatorPageStructure[]) {
         data.forEach((æ) => {
             this.pages_data.push(æ);
         });
@@ -152,15 +101,7 @@ export class ButtonsPaginatorBuilder {
         return this;
     };
 
-    /**
-     * Set pages to the paginator.
-     * 
-     * **Note:** The difference between `addPages` and `setPages` that the first method (`addPages`) adds multiple pages at same time to the pages array, while the other (`setPages`) overwrites the array to an empty array and sets new pages.
-     * @param data The data.
-     * @returns {this}
-     */
-
-    public setPages(...data: PagesData[]) {
+    public setPages(...data: ButtonsPaginatorPageStructure[]) {
         this.pages_data = [];
 
         data.forEach((æ) => {
@@ -170,23 +111,7 @@ export class ButtonsPaginatorBuilder {
         return this;
     };
 
-    /**
-     * Sends the message with the buttons.
-     * 
-     * By default, the interaction will be replied. To modify this, you can edit the reply or send the pagination to the interation channel without replying to the user in the options:
-     * 
-     * ```ts
-     * {
-     *     channelSend: true, // Interaction channel send.
-     *     editReply: true // Interaction reply edit.
-     * }
-     * ```
-     * 
-     * @param options Custom options of sending the message.
-     * @returns {Promise<unknown>}
-     */
-
-    public async send(options?: SendOptions) {
+    public async send(options?: ButtonsPaginatorSendOptions) {
         return new Promise(async (resolved, rejected) => {
             try {
                 let components = this.buttons_data.map((item) => {

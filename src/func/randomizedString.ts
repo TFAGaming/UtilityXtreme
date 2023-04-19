@@ -5,22 +5,6 @@ interface RandomizedStringOptions {
     includesCapitalizedLetters?: boolean
 };
 
-/**
- * Generates a random characters string with a specific length.
- * @param length The length of the string.
- * @param options Custom options. Default: `{}`
- * @returns {string}
- * 
- * @example
- * ```ts
- * randomizedString(6) // => Fdbj1A
- * 
- * randomizedString(6, { includesCapitalizedLetters: false }); // => dac45d
- * 
- * randomizedString(6, { includesInteger: false }), // => aFnvFD
- * ```
- */
-
 export function randomizedString(length: number, options?: RandomizedStringOptions): string {
     if (!length) throw new DJSError(errorkeys.MissingParam);
 

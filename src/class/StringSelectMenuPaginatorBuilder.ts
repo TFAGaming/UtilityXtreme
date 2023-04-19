@@ -13,7 +13,7 @@ import {
 } from "discord.js";
 import { DJSError, errorkeys } from "../core/error";
 
-interface SendOptionsData {
+interface DropdownPaginatorSendOptions {
     home?: {
         content?: string,
         embeds?: EmbedBuilder[],
@@ -32,7 +32,7 @@ interface SendOptionsData {
     replyWithEphemeralMessageOnCollect?: boolean
 };
 
-interface OptionsData {
+interface DropdownPaginatorOptionsStructure {
     message: {
         content?: string,
         embeds?: EmbedBuilder[],
@@ -45,7 +45,7 @@ interface OptionsData {
     }
 };
 
-interface CustomOptions {
+interface DropdownPaginatorConstructorOptions {
     placeHolder?: string,
     filter?: CollectorFilter<[StringSelectMenuInteraction]>,
     time?: number | undefined,
@@ -55,39 +55,25 @@ interface CustomOptions {
 export class StringSelectMenuPaginatorBuilder {
     readonly data: this = this;
     readonly collector: InteractionCollector<StringSelectMenuInteraction> | undefined;
-    options_data: OptionsData[] = [];
-    readonly custom_options: CustomOptions;
+    options_data: DropdownPaginatorOptionsStructure[] = [];
+    readonly custom_options: DropdownPaginatorConstructorOptions;
     readonly interaction: CommandInteraction;
 
-    /**
-     * Creates a Select menu/Dropdown menu paginator using `CommandInteraction#channel#createMessageComponentCollector()` from **discord.js**.
-     * @param interaction The interaction, extends from the class `CommandInteraction` from **discord.js**.
-     * @param options Custom options. Default: `{ time: 60000, placeHolder: 'Select here', customId: 'utilityxtreme-menu' }`
-     */
-
-    constructor(interaction: CommandInteraction, options?: CustomOptions) {
+    constructor(interaction: CommandInteraction, customoptions?: DropdownPaginatorConstructorOptions) {
         if (!interaction) throw new DJSError(errorkeys.MissingParam);
 
         this.interaction = interaction;
 
         this.collector = this.interaction.channel?.createMessageComponentCollector({
             componentType: ComponentType.StringSelect,
-            filter: options?.filter || undefined,
-            time: options?.time || 60000
+            filter: customoptions?.filter || undefined,
+            time: customoptions?.time || 60000
         });
 
-        this.custom_options = options || {};
+        this.custom_options = customoptions || {};
     };
 
-    /**
-     * Adds options to the Dropdown menu options array.
-     * 
-     * **Note:** The difference between `addOptions` and `setOptions` that the first method (`addOptions`) adds multiple options at same time to the options array, while the other (`setOptions`) overwrites the array to an empty array and sets new options.
-     * @param data The data.
-     * @returns {this}
-     */
-
-    public addOptions(...data: OptionsData[]) {
+    public addOptions(...data: DropdownPaginatorOptionsStructure[]) {
         data.forEach((æ) => {
             this.options_data.push(æ);
         });
@@ -95,15 +81,7 @@ export class StringSelectMenuPaginatorBuilder {
         return this;
     };
 
-    /**
-     * Set options to the Dropdown menu options array.
-     * 
-     * **Note:** The difference between `addOptions` and `setOptions` that the first method (`addOptions`) adds multiple options at same time to the options array, while the other (`setOptions`) overwrites the array to an empty array and sets new options.
-     * @param data The data.
-     * @returns {this}
-     */
-
-    public setOptions(...data: OptionsData[]) {
+    public setOptions(...data: DropdownPaginatorOptionsStructure[]) {
         this.options_data = [];
 
         data.forEach((æ) => {
@@ -113,23 +91,11 @@ export class StringSelectMenuPaginatorBuilder {
         return this;
     };
 
-    /**
-     * Push an option to the Dropdown menu options array.
-     * @param data The data.
-     * @returns {this}
-     */
-
-    public pushOption(data: OptionsData) {
+    public pushOption(data: DropdownPaginatorOptionsStructure) {
         this.options_data.push(data);
 
         return this;
     };
-
-    /**
-     * Pull an option from the Dropdown menu options array by it's index.
-     * @param index The index of the option.
-     * @returns {this}
-     */
 
     public pullOption(index: number) {
         this.options_data.splice(index, 1);
@@ -137,23 +103,7 @@ export class StringSelectMenuPaginatorBuilder {
         return this;
     };
 
-    /**
-     * Sends the message with the dropdown menu.
-     * 
-     * By default, the interaction will be replied. To modify this, you can edit the reply or send the pagination to the interation channel without replying to the user in the options:
-     * 
-     * ```ts
-     * {
-     *     channelSend: true, // Interaction channel send.
-     *     editReply: true // Interaction reply edit.
-     * }
-     * ```
-     * 
-     * @param options Custom options of sending the message.
-     * @returns {Promise<unknown>}
-     */
-
-    public async send(options?: SendOptionsData) {
+    public async send(options?: DropdownPaginatorSendOptions) {
         return new Promise(async (resolved, rejected) => {
             try {
                 const menu = new StringSelectMenuBuilder()

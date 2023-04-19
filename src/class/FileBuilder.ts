@@ -2,14 +2,6 @@ import { AttachmentBuilder } from "discord.js";
 import { DJSError, errorkeys } from "../core/error";
 
 export class FileBuilder {
-    /**
-     * Creates a text file for Discord.
-     * @param content The content for the file.
-     * @param name The file name. Default: `'file.txt'`
-     * @param description The file description. Default: `undefined`
-     * @returns {AttachmentBuilder}
-     */
-
     constructor(content: string, name?: string, description?: string) {
         if (!content) throw new DJSError(errorkeys.MissingParam);
 

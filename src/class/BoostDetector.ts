@@ -2,18 +2,7 @@ import { Client, GuildMember } from 'discord.js';
 import { EventEmitter } from 'events';
 import { DJSError, errorkeys } from '../core/error';
 
-interface BoostDetectorEvents {
-    'boostCreate': [member: GuildMember]
-    'boostRemove': [member: GuildMember]
-};
-
 export class BoostDetector extends EventEmitter {
-    /**
-     * Detects whenever a guild member has boosted a server.
-     * @param client The client.
-     * @extends {EventEmitter}
-     */
-
     constructor(client: Client) {
         if (!client) throw new DJSError(errorkeys.MissingParam);
 

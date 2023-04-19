@@ -4,8 +4,8 @@ import checkpackages from './core/pkg/checkpackages';
 // Making sure that node.js version is 16.9.0 or above.
 if (parseInt(process.version.replace('v', ' ').split('.').join('')) < 1690) throw new DJSError(errorkeys.NodeVersionError, 'v16.9.0');
 
-// Making sure that discord.js is installed. [REMOVED]
-// checkpackages();
+// Making sure that discord.js is installed.
+checkpackages();
 
 /**
  * @module utilityxtreme

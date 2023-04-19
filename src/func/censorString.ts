@@ -1,13 +1,5 @@
 import { DJSError, errorkeys } from "../core/error";
 
-/**
- * Replaces specific characters by '*' from a string.
- * @param string The string to replace its characters.
- * @param words The words to check.
- * @param replacer The replacer of the censored words. Default: `'*'`
- * @returns {string}
- */
-
 export function censorString(string: string, words: string[], replacer?: string): string {
     if (!string) throw new DJSError(errorkeys.MissingParam);
     if (!words) throw new DJSError(errorkeys.MissingParam);

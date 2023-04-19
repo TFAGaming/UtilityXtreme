@@ -2,7 +2,7 @@
  * The Discord timestamp styles to use with the function `createDiscordTimestamp`.
  */
 
-export enum TimestampStyles {
+export enum DiscordTimestampStyles {
     /**
      * Example: `20:13`
      */

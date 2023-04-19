@@ -16,12 +16,12 @@ import {
 import { DJSError, errorkeys } from "../core/error/index";
 import { calculateString } from "../func";
 
-interface CustomOptions {
+interface CalculatorConstructorOptions {
     filter?: CollectorFilter<[ButtonInteraction]>;
     time?: number | undefined;
 }
 
-interface SendOptions {
+interface CalculatorSendOptions {
     channelSend?: boolean;
     editReply?: boolean;
     ephemeral?: boolean;
@@ -29,7 +29,7 @@ interface SendOptions {
     deleteMessageAfterTimeout?: boolean;
 }
 
-interface MainOptions {
+interface CalculatorMainMessageStructure {
     content?: string;
     embeds?: EmbedBuilder[];
     files?: AttachmentBuilder[];
@@ -38,18 +38,11 @@ interface MainOptions {
 export class Calculator {
     readonly data: this = this;
     readonly collector: InteractionCollector<ButtonInteraction> | undefined;
-    main_options: MainOptions | undefined = undefined;
-    readonly custom_options: CustomOptions;
+    main_options: CalculatorMainMessageStructure | undefined = undefined;
+    readonly custom_options: CalculatorConstructorOptions;
     readonly interaction: CommandInteraction;
 
-    /**
-     * Creates a Calculator with buttons by using `CommandInteraction#channel#createMessageComponentCollector()` from **discord.js**.
-     *
-     * @param interaction The interaction, extends from the class `CommandInteraction` from **discord.js**.
-     * @param options Custom options. Default: `{ time: 300000 }`
-     */
-
-    constructor(interaction: CommandInteraction, options?: CustomOptions) {
+    constructor(interaction: CommandInteraction, options?: CalculatorConstructorOptions) {
         if (!interaction) throw new DJSError(errorkeys.MissingParam);
 
         this.interaction = interaction;
@@ -63,44 +56,13 @@ export class Calculator {
         this.custom_options = options || {};
     }
 
-    /**
-     * Modify the message of the calculator.
-     *
-     * List of variables to use with string messages:
-     *
-     * ```nolang
-     * %codeblock%: Shows the codeblock with the evaluation.
-     * ```
-     *
-     * **Warn:** The variables above works only in the content property and in the embed description.
-     *
-     * @param options
-     * @returns {this}
-     */
-
-    public setMain(options: MainOptions) {
+    public setMain(options: CalculatorMainMessageStructure) {
         this.main_options = options;
 
         return this;
     }
 
-    /**
-     * Sends the calculator message.
-     *
-     * By default, the interaction will be replied. To modify this, you can edit the reply or send the pagination to the interation channel without replying to the user in the options:
-     *
-     * ```ts
-     * {
-     *     channelSend: true, // Interaction channel send.
-     *     editReply: true // Interaction reply edit.
-     * }
-     * ```
-     *
-     * @param options Custom options of sending the message.
-     * @returns {Promise<unknown>}
-     */
-
-    public async send(options?: SendOptions) {
+    public async send(options?: CalculatorSendOptions) {
         return new Promise(async (resolved, rejected) => {
             try {
                 const components: ButtonBuilder[][] = [

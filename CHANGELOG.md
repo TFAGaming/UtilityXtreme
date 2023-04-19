@@ -2,10 +2,13 @@ CHANGELOG.md is a file where it logs all the latest file changes and their new v
 
 ## v1.4.0-prerelease-x
 - New class: `Calculator`.
+- New function: `calculateString`.
 - `CommandInteraction#channel#send` and `CommandInteraction#editReply` are now editable in the classes: `StringSelectMenuPaginatorBuilder`, `ButtonsPaginatorBuilder`, and `Calculator`.
 - The button ID `deletereply` for the class `ButtonsPaginatorBuilder` is now fixed.
 - Events from the class `ApplicationCommandsLoader` fixed.
 - Add **keywords** to `package.json` file.
+- Typings file are now in a specific folder: "Types".
+- Major bug fixes.
 
 ## v1.3.3
 - The class `ButtonsPaginatorBuilder` now supports the reply types: Whenever the interaction is replied, it will edit it. Else, it will just reply.

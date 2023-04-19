@@ -1,11 +1,5 @@
 import { DJSError, errorkeys } from "../core/error";
 
-/**
- * Reverses a string.
- * @param string The string to reverse.
- * @returns {string}
- */
-
 export function reverseString(string: string): string {
     if (!string) throw new DJSError(errorkeys.MissingParam);
 
