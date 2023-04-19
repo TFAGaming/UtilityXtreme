@@ -5,5 +5,5 @@ export function calculateString(string: string): string {
 
     if (typeof string !== 'string') throw new DJSError(errorkeys.TypeError, 'string');
     
-    return new Function('return ', string)();
+    return new Function('return ' + string)();
 };

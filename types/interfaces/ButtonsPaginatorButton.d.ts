@@ -1,6 +1,6 @@
 import { ComponentEmojiResolvable, ButtonStyle, AttachmentBuilder, EmbedBuilder, CollectorFilter, ButtonInteraction } from "discord.js";
 
-interface ButtonsPaginatorConstructorOptions {
+export interface ButtonsPaginatorConstructorOptions {
     filter?: CollectorFilter<[ButtonInteraction]>,
     time?: number | undefined
 }

@@ -1,6 +1,11 @@
 CHANGELOG.md is a file where it logs all the latest file changes and their new version from the npm registry.
 
-## v1.4.0-prerelease-x
+## v1.4.0
+- Fixed functions and classes: `calculateString`, `ButtonsPaginatorBUilder`, and `StringSelectMenuPaginatorBuilder`.
+- New helpers: `ButtonsPaginator`.
+- Auto declarations from TSC is now disabled, it will be written manually.
+
+## v1.4.0-prerelease-x [DEPRECATED]
 - New class: `Calculator`.
 - New function: `calculateString`.
 - `CommandInteraction#channel#send` and `CommandInteraction#editReply` are now editable in the classes: `StringSelectMenuPaginatorBuilder`, `ButtonsPaginatorBuilder`, and `Calculator`.

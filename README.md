@@ -1,12 +1,15 @@
 <h1 align="center">
     UtilityXtreme
 </h1>
-<p align="center">
-    <img src="https://nodei.co/npm/utilityxtreme.png?downloadRank=true&downloads=true&downloadRank=true&stars=true">
 
 <h3 align="center">
     The friendly package to start with your Discord bot application.
 </h3>
+
+<br>
+
+<p align="center">
+    <img src="https://nodei.co/npm/utilityxtreme.png?downloadRank=true&downloads=true&downloadRank=true&stars=true">
 </p>
 
 **UtilityXtreme** is a library that simplifies of creating your own Discord bot application.
@@ -78,7 +81,7 @@ yarn add utilityxtreme
 ## Example Discord Bot
 ### TypeScript:
 ```ts
-import { Client, SlashCommandBuilder, CommandInteraction } from 'discord.js';
+import { Client, SlashCommandBuilder } from 'discord.js';
 import { ApplicationCommandsLoader } from 'utilityxtreme';
 
 const botToken = "Your bot token";
@@ -92,7 +95,6 @@ const commands: SlashCommandBuilder[] = [
     new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with Pong!')
-        .toJSON()
 ];
 
 const loader: ApplicationCommandsLoader = new ApplicationCommandsLoader(botToken, botId, commands);
@@ -105,7 +107,7 @@ loader.start().catch(console.error);
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
-    if ((interaction as CommandInteraction).commandName === 'ping') {
+    if (interaction.commandName === 'ping') {
         await interaction.reply({ content: 'Pong!' });
     };
 });
@@ -130,7 +132,6 @@ const commands = [
     new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with Pong!')
-        .toJSON()
 ];
 
 const loader = new ApplicationCommandsLoader(botToken, botId, commands);
@@ -166,7 +167,7 @@ You can create an [Issue](https://github.com/TFAGaming/UtilityXtreme/issues) or 
 ## Other information
 
 ### License:
-This project is under the license **GPL-3.0**.
+This project is under the license [**GPL-3.0**](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 ### Development:
 This package is not associated with the [**discord.js**](https://www.npmjs.com/package/discord.js) development team.
