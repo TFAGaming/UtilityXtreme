@@ -211,9 +211,9 @@ export class Calculator {
                         : `Evaluation: ${codeBlock(data)}`,
                     embeds: this.main_options && this.main_options.embeds
                         ? this.main_options.embeds?.map((e) => {
-                            e.data?.description?.replace("%codeblock%", codeBlock(data));
+                            e.data.description?.replace('%codeblock%', codeBlock(data));
 
-                            return e;
+                            return new EmbedBuilder(e.data);
                         })
                         : [],
                     files: this.main_options?.files?.map((f) => f) || [],
@@ -235,9 +235,9 @@ export class Calculator {
                         : `Evaluation: ${codeBlock(data)}`,
                     embeds: this.main_options && this.main_options.embeds
                         ? this.main_options.embeds?.map((e) => {
-                            e.data?.description?.replace("%codeblock%", codeBlock(data));
+                            e.data.description?.replace('%codeblock%', codeBlock(data));
 
-                            return e;
+                            return new EmbedBuilder(e.data);
                         })
                         : [],
                     files: this.main_options?.files?.map((f) => f) || [],
@@ -286,12 +286,9 @@ export class Calculator {
                                 : `Evaluation: ${codeBlock(data)}`,
                             embeds: this.main_options && this.main_options.embeds
                                 ? this.main_options.embeds?.map((e) => {
-                                    e.data?.description?.replace(
-                                        "%codeblock%",
-                                        codeBlock(data)
-                                    );
+                                    e.data.description?.replace('%codeblock%', codeBlock(data));
 
-                                    return e;
+                                    return new EmbedBuilder(e.data);
                                 })
                                 : [],
                             components: actionrows,
@@ -312,9 +309,9 @@ export class Calculator {
                                 : `Evaluation: ${codeBlock(data)}`,
                             embeds: this.main_options && this.main_options.embeds
                                 ? this.main_options.embeds?.map((e) => {
-                                    e.data?.description?.replace("%codeblock%", codeBlock(data));
+                                    e.data.description?.replace('%codeblock%', codeBlock(data));
 
-                                    return e;
+                                    return new EmbedBuilder(e.data);
                                 })
                                 : [],
                             components: actionrows,
@@ -333,9 +330,9 @@ export class Calculator {
                                 : `Evaluation: ${codeBlock(data)}`,
                             embeds: this.main_options && this.main_options.embeds
                                 ? this.main_options.embeds?.map((e) => {
-                                    e.data?.description?.replace("%codeblock%", codeBlock(data));
+                                    e.data.description?.replace('%codeblock%', codeBlock(data));
 
-                                    return e;
+                                    return new EmbedBuilder(e.data);
                                 })
                                 : [],
                             components: actionrows,
@@ -360,13 +357,18 @@ export class Calculator {
                                 : `Evaluation: ${codeBlock(data)}`,
                             embeds: this.main_options && this.main_options.embeds
                                 ? this.main_options.embeds?.map((e) => {
-                                    e.data?.description?.replace("%codeblock%", codeBlock(data));
+                                    e.data.description?.replace('%codeblock%', codeBlock(data));
 
-                                    return e;
+                                    return new EmbedBuilder(e.data);
                                 })
                                 : [],
                             files: this.main_options?.files?.map((f) => f) || []
                         });
+
+                        await i.reply({
+                            content: 'Calculator interaction has been terminated.',
+                            ephemeral: true
+                        }).catch(() => { });
                     }
 
                     return;
@@ -389,9 +391,9 @@ export class Calculator {
                                 : `Evaluation: ${codeBlock(data)}`,
                             embeds: this.main_options && this.main_options.embeds
                                 ? this.main_options.embeds?.map((e) => {
-                                    e.data?.description?.replace("%codeblock%", codeBlock(data));
+                                    e.data.description?.replace('%codeblock%', codeBlock(data));
 
-                                    return e;
+                                    return new EmbedBuilder(e.data);
                                 })
                                 : [],
                             files: this.main_options?.files?.map((f) => f) || [],

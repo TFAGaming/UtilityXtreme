@@ -1,6 +1,9 @@
 CHANGELOG.md is a file where it logs all the latest file changes and their new version from the npm registry.
 
-## v1.4.0
+## v1.4.1
+- Fixed class: `Calculator`.
+
+## v1.4.0 
 - Fixed functions and classes: `calculateString`, `ButtonsPaginatorBUilder`, and `StringSelectMenuPaginatorBuilder`.
 - New helpers: `ButtonsPaginator`.
 - Auto declarations from TSC is now disabled, it will be written manually.
@@ -15,7 +18,7 @@ CHANGELOG.md is a file where it logs all the latest file changes and their new v
 - Typings file are now in a specific folder: "Types".
 - Major bug fixes.
 
-## v1.3.3
+## v1.3.3 [DEPRECATED]
 - The class `ButtonsPaginatorBuilder` now supports the reply types: Whenever the interaction is replied, it will edit it. Else, it will just reply.
 
 ## v1.3.0 until v1.3.2 [DEPRECATED]
