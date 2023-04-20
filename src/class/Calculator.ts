@@ -150,9 +150,8 @@ export class Calculator {
                             .setCustomId("*")
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
-                            .setLabel("~")
-                            .setCustomId("NO_ID_1")
-                            .setDisabled(true)
+                            .setLabel("ANS")
+                            .setCustomId("lastanswer")
                             .setStyle(ButtonStyle.Secondary),
                     ],
                     [
@@ -199,6 +198,7 @@ export class Calculator {
                 ]
 
                 let data = "";
+                let lastans = "0";
 
                 const replyData: InteractionReplyOptions = {
                     content: this.main_options
@@ -210,11 +210,7 @@ export class Calculator {
                             : "** **"
                         : `Evaluation: ${codeBlock(data)}`,
                     embeds: this.main_options && this.main_options.embeds
-                        ? this.main_options.embeds?.map((e) => {
-                            e.data.description?.replace('%codeblock%', codeBlock(data));
-
-                            return new EmbedBuilder(e.data);
-                        })
+                        ? this.main_options.embeds?.map((e) => e)
                         : [],
                     files: this.main_options?.files?.map((f) => f) || [],
                     components: actionrows,
@@ -234,11 +230,7 @@ export class Calculator {
                             : "** **"
                         : `Evaluation: ${codeBlock(data)}`,
                     embeds: this.main_options && this.main_options.embeds
-                        ? this.main_options.embeds?.map((e) => {
-                            e.data.description?.replace('%codeblock%', codeBlock(data));
-
-                            return new EmbedBuilder(e.data);
-                        })
+                        ? this.main_options.embeds?.map((e) => e)
                         : [],
                     files: this.main_options?.files?.map((f) => f) || [],
                     components: actionrows,
@@ -271,9 +263,10 @@ export class Calculator {
                             result = calculateString(data);
                         } catch (err) {
                             result = `Err 1`;
-                        }
+                        };
 
                         data = result;
+                        lastans = result === 'Err 1' ? lastans : result;
 
                         await i.update({
                             content: this.main_options
@@ -285,11 +278,7 @@ export class Calculator {
                                     : "** **"
                                 : `Evaluation: ${codeBlock(data)}`,
                             embeds: this.main_options && this.main_options.embeds
-                                ? this.main_options.embeds?.map((e) => {
-                                    e.data.description?.replace('%codeblock%', codeBlock(data));
-
-                                    return new EmbedBuilder(e.data);
-                                })
+                                ? this.main_options.embeds?.map((e) => e)
                                 : [],
                             components: actionrows,
                         });
@@ -308,11 +297,7 @@ export class Calculator {
                                     : "** **"
                                 : `Evaluation: ${codeBlock(data)}`,
                             embeds: this.main_options && this.main_options.embeds
-                                ? this.main_options.embeds?.map((e) => {
-                                    e.data.description?.replace('%codeblock%', codeBlock(data));
-
-                                    return new EmbedBuilder(e.data);
-                                })
+                                ? this.main_options.embeds?.map((e) => e)
                                 : [],
                             components: actionrows,
                         });
@@ -329,11 +314,7 @@ export class Calculator {
                                     : "** **"
                                 : `Evaluation: ${codeBlock(data)}`,
                             embeds: this.main_options && this.main_options.embeds
-                                ? this.main_options.embeds?.map((e) => {
-                                    e.data.description?.replace('%codeblock%', codeBlock(data));
-
-                                    return new EmbedBuilder(e.data);
-                                })
+                                ? this.main_options.embeds?.map((e) => e)
                                 : [],
                             components: actionrows,
                         });
@@ -344,7 +325,9 @@ export class Calculator {
 
                         if (id === "=" || id === "ac" || id === "exit" || id === "delete") return;
 
-                        data += id;
+                        if (id === 'lastanswer') {
+                            data += lastans;
+                        } else data += id;
 
                         await i.update({
                             content: this.main_options
@@ -356,11 +339,7 @@ export class Calculator {
                                     : "** **"
                                 : `Evaluation: ${codeBlock(data)}`,
                             embeds: this.main_options && this.main_options.embeds
-                                ? this.main_options.embeds?.map((e) => {
-                                    e.data.description?.replace('%codeblock%', codeBlock(data));
-
-                                    return new EmbedBuilder(e.data);
-                                })
+                                ? this.main_options.embeds?.map((e) => e)
                                 : [],
                             files: this.main_options?.files?.map((f) => f) || []
                         });
@@ -390,11 +369,7 @@ export class Calculator {
                                     : "** **"
                                 : `Evaluation: ${codeBlock(data)}`,
                             embeds: this.main_options && this.main_options.embeds
-                                ? this.main_options.embeds?.map((e) => {
-                                    e.data.description?.replace('%codeblock%', codeBlock(data));
-
-                                    return new EmbedBuilder(e.data);
-                                })
+                                ? this.main_options.embeds?.map((e) => e)
                                 : [],
                             files: this.main_options?.files?.map((f) => f) || [],
                             components: [

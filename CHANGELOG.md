@@ -1,9 +1,13 @@
 CHANGELOG.md is a file where it logs all the latest file changes and their new version from the npm registry.
 
-## v1.4.1
+## v1.4.2
+- Embed variable **%codeblock%** is no longer supported in the class `Calculator`.
+- A lot of bug fixes.
+
+## v1.4.1 [DEPRECATED]
 - Fixed class: `Calculator`.
 
-## v1.4.0 
+## v1.4.0 [DEPRECATED]
 - Fixed functions and classes: `calculateString`, `ButtonsPaginatorBUilder`, and `StringSelectMenuPaginatorBuilder`.
 - New helpers: `ButtonsPaginator`.
 - Auto declarations from TSC is now disabled, it will be written manually.

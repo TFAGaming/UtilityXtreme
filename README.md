@@ -33,6 +33,7 @@
         - [TypeScript](#typescript)
         - [JavaScript (CommonJS)](#javascript-commonjs)
     - [Developers](#developers)
+    - [Support](#support)
     - [Other Information](#other-information)
         - [License](#license)
         - [Development](#development)
@@ -53,6 +54,8 @@ yarn add utilityxtreme
 ```
 
 ## Documentation
+> **Warn:** This package is focused on declaration files, any comments are not going to be defined in the documentation site.
+
 [Click here](https://tfagaming.github.io/utilityxtreme/) to visit the documentation website.
 
 ## Modules preview

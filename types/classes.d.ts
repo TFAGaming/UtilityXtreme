@@ -7,7 +7,8 @@ import {
 } from "discord.js";
 import {
     BoostDetectorEvents,
-    LoaderEvents
+    LoaderEvents,
+    MongoDBConnectorEvents
 } from "./events";
 import {
     ButtonsPaginatorButtonStructure,
@@ -73,7 +74,7 @@ export class ButtonsPaginatorBuilder {
     /**
      * Pushes multiple buttons to the buttons array.
      * 
-     * Use the following blue colored IDs below to make the provided buttons working.
+     * Use the following IDs below to make the provided buttons working.
      * ```yaml
      * next: Next page.
      * previous: Previous page.
@@ -91,7 +92,7 @@ export class ButtonsPaginatorBuilder {
     /**
      * Overwrites the buttons array into an empty array and pushes multiple buttons to the array.
      * 
-     * Use the following blue colored IDs below to make the provided buttons working.
+     * Use the following IDs below to make the provided buttons working.
      * ```yaml
      * next: Next page.
      * previous: Previous page.
@@ -139,6 +140,12 @@ export class Calculator {
 
     /**
      * Overwrites the original content message.
+     * 
+     * Use the following variables below between two percentages symbols (`%`) in strings:
+     * ```yaml
+     * codeblock: The user math equation input.
+     * ```
+     * 
      * @param data The message structure data.
      */
 
@@ -308,6 +315,20 @@ export class StringSelectMenuPaginatorBuilder {
      */
 
     public send(options?: DropdownPaginatorSendOptions): Promise<unknown>;
+}
+
+export class MongoDBConnector {
+    /**
+     * Connect MongoDB with Node.JS easily.
+     * 
+     * @requires mongoose
+     * @param uri 
+     */
+
+    constructor(uri: string);
+
+    public on<K extends keyof MongoDBConnectorEvents>(event: K, listener: (...args: MongoDBConnectorEvents[K]) => void): this;
+    public once<K extends keyof MongoDBConnectorEvents>(event: K, listener: (...args: MongoDBConnectorEvents[K]) => void): this;  
 }
 
 /**
