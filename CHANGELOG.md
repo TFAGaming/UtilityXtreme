@@ -1,5 +1,8 @@
 CHANGELOG.md is a file where it logs all the latest file changes and their new version from the npm registry.
 
+## v1.5.1
+- Typings fixed.
+
 ## v1.5.0
 - Removed the class `JSONDatabase` due to types errors, and new package has been released: `tfa-jsonmap`.
 

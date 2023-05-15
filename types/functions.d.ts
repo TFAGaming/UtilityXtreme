@@ -27,7 +27,7 @@ export function censorString(string: string, words: string[], replacer?: string)
  * @param style The style of the timestamp.
  */
 
-export function createDiscordTimestamp<T extends keyof DiscordTimestampStyles>(timestamp: number, style?: T): string;
+export function createDiscordTimestamp(timestamp: number, style?: DiscordTimestampStyles): string;
 
 /**
  * Generates a random HEX color code.
